@@ -2,7 +2,7 @@ function Packet() {
     Packet.Packets = null;
 }
 
-Packet.execute = function(session, message) {
+Packet.execute = function (session, message) {
     //console.log("Unhandled packet: " + message.header);
     if (typeof Packet.Packets[message.header] == "undefined") {
         return;
@@ -12,15 +12,15 @@ Packet.execute = function(session, message) {
     //console.log("<" + session.getSocket().remoteAddress + "> Executing packet: " + message.header);
 
     try {
-        var Incoming = require('../messages/Handlers/' + Packet.Packets[message.header]);
-        Incoming.Parse(session, message);
+        var Response = require('../messages/Handlers/' + Packet.Packets[message.header]);
+        Response.Parse(session, message);
     }
-    catch(err) {
+    catch (err) {
         console.log("Unhandled Error: " + err.message + " - " + err.stack);
     }
 };
 
-Packet.define = function() {
+Packet.define = function () {
     Packet.Packets = [];
     Packet.Packets[global.Incoming.ReleaseVersion] = "VersionCheck";
     Packet.Packets[global.Incoming.InitCryptoMessageEvent] = "InitCrypto";

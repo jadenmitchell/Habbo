@@ -1,9 +1,11 @@
-function VersionCheck() { };
-
-VersionCheck.Parse = function(Session, Message)
+function VersionCheck()
 {
-    var Build = Message.readString();
-    console.log(Build);
 }
+
+VersionCheck.Parse = function (Session, Message)
+{
+    var build = Message.readString();
+    console.log(build);
+};
 
 module.exports = VersionCheck;

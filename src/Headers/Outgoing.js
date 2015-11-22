@@ -1,9 +1,8 @@
-
 module.exports =
 {
-    InitCryptoMessageComposer: 4000,
-    SecretKeyMessageComposer: 3132,
-    AuthenticationOKMessageComposer: 3528,
-    UniqueMachineIDMessageComposer: 2058,
-    DisconnectReasonMessageComposer: 1221,
-}
+    InitCryptoMessageComposer: 2172,
+    SecretKeyMessageComposer: 690,
+    AuthenticationOKMessageComposer: 3151,
+    UniqueMachineIDMessageComposer: 3540,
+    DisconnectReasonMessageComposer: 4000
+};
