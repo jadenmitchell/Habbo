@@ -1,4 +1,6 @@
 var logger = require('./lib/logger'),
+    //redis = require('redis'),
+    //client = redis.createClient(),
     Network = require('./lib/Network'),
     network;
 
