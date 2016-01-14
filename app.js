@@ -1,22 +1,8 @@
-var Server = require('./src/Server');
-var mysql = require('mysql');
-var Pool = mysql.createPool({
-    connectionLimit: 100,
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'habbo_db',
-    debug: false
-});
+var logger = require('./lib/logger'),
+    Network = require('./lib/Network'),
+    network;
 
-var server = new Server(3000);
+network = new Network(3001);
+network.invokeTcpServer();
 
-global.Environment = {
-    getPool: function () {
-        return Pool;
-    },
-
-    getConnection: function () {
-        return server;
-    }
-};
+logger.info("Networking server is listening on 3001");
