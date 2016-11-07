@@ -1,0 +1,19 @@
+{
+  "name": "habbo",
+  "version": "3.0.0",
+  "description": "Habbo.com flash client server emulator in Node.js",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jadenmitchell/Habbo.git"
+  },
+  "author": "Jaden Mitchell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jadenmitchell/Habbo/issues"
+  },
+  "homepage": "https://github.com/jadenmitchell/Habbo#readme",
+  "dependencies": {
+    "winston": "^2.3.0"
+  }
+}
