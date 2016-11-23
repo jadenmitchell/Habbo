@@ -14,6 +14,8 @@
   },
   "homepage": "https://github.com/jadenmitchell/Habbo#readme",
   "dependencies": {
+    "async": "^2.1.4",
+    "node-rsa": "^0.4.2",
     "winston": "^2.3.0"
   }
 }

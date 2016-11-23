@@ -1,8 +1,8 @@
-﻿"use strict";
+﻿'use strict';
 
-const logger = require("./lib/logger.js");
-const server = require("./lib/server.js");
+const packetInfo = require('./lib/game/packet_info');
+const server = require('./lib/server');
 
-let tcpServer = new server.TcpServer(3001, 100);
-
-tcpServer.startListen();
+packetInfo.loadPacketHandlers();
+const tcpServer = new server(3001, 10);
+tcpServer.listen();

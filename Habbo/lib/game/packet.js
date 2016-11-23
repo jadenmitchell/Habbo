@@ -1,90 +1,43 @@
-﻿const stream = require("stream");
+﻿const assert = require('assert');
+const ByteBuf = require('../bytebuf');
 
-function request() {
-};
-
-function response(buff) {
-
-};
-
-function requestBufferCodecHandler(socket, buff) {
-    // garbage data
-    if (buff.length < 6) return;
-
-    if (buff[0] == 60) {
-        socket.write("<?xml version=\"1.0\"?>\r\n" +
-            "<!DOCTYPE cross-domain-policy SYSTEM \"/xml/dtds/cross-domain-policy.dtd\">\r\n" +
-            "<cross-domain-policy>\r\n" +
-            "<allow-access-from domain=\"*\" to-ports=\"1-31111\" />\r\n" +
-            "</cross-domain-policy>\0");
-        return;
+/**
+ * @export @final
+ */
+class Packet {
+    constructor(header, length, buffer) {
+        assert(buffer instanceof ByteBuf, 'Buffer must be an instance of ByteBuf!');
+        this._header = header;
+        this._length = length;
+        this._buffer = buffer == null ? new ByteBuf(Buffer.allocUnsafeSlow(6)) : buffer;
     }
 
-    const bufferStream = new ReaderBufferStream(buff);
-    const length = bufferStream.readInt();
-    const header = bufferStream.readShort();
-    const data = bufferStream.readToEnd();
-};
-
-function responsePipelineHandler(buff) {
-
-};
-
-class ReaderBufferStream extends stream.Readable {
-    constructor(source) {
-        if (!Buffer.isBuffer(source)) {
-            throw (new Error("Source must be a buffer."));
-        }
-
-        stream.Readable.call(this);
-
-        this._source = source;
-        this._offset = 0;
-        this._length = source.length;
-
-        this.on("end", this._destroy);
+    /**
+     * Packet header
+     * @this {Packet}
+     * @returns {number}
+     */
+    get header() {
+        return this._header;
     }
 
-    _destroy() {
-        this._source = null;
-        this._offset = null;
-        this._length = null;
+    /**
+     * Packet length
+     * @this {Packet}
+     * @returns {number}
+     */
+    get length() {
+        return this._length;
     }
 
-    readBytes(size) {
-        if (this._offset < this._length) {
-            this.push(this._source.slice(this._offset, (this._offset + size)));
-            this._offset += size;
-        }
-
-        if (this._offset >= this._length) {
-            this.push(null);
-        }
+    /**
+     * Is the packet buffer corrupt?
+     * @this {Packet}
+     * @returns {boolean}
+     */
+    isCorrupt() {
+        return (!this._buffer.readable || this._buffer.length < 6);
     }
+}
 
-    readShort() {
-        return this.read(2).readInt16BE();
-    }
-
-    readInt() {
-        return this.read(4).readInt32BE();
-    }
-
-    readUInt() {
-        return this.read(4).readInt32LE();
-    }
-
-    readString() {
-        const length = this.read(2).readInt16BE();
-        return this.read(length).toString("utf-8");
-    }
-
-    readToEnd() {
-        return this.read(this._length - this._offset);
-    }
-};
-
-module.exports.Request = request;
-module.exports.Response = response;
-module.exports.requestBufferCodecHandler = requestBufferCodecHandler;
-module.exports.responsePipelineHandler = responsePipelineHandler;
+module.exports = Packet;

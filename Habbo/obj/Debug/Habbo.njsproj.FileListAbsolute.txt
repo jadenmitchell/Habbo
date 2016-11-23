@@ -1,0 +1,2 @@
+C:\Users\cshaw\documents\visual studio 2015\Projects\Habbo\Habbo\obj\Debug\Habbo.njsprojResolveAssemblyReference.cache
+C:\Users\cshaw\documents\visual studio 2015\Projects\Habbo\Habbo\bin\Microsoft.NodejsTools.WebRole.dll
