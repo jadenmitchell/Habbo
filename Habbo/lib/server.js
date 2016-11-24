@@ -5,6 +5,7 @@ const GameClient = require('./game/game_client');
 
 /**
  * A non-blocking keep-alive TCP server socket.
+ * 
  * @param port the port we'll be listening on
  * @param maxConnections maximum amount of connections to the server
  * @constructor
@@ -16,6 +17,7 @@ function tcpServer(port, maxConnections) {
 
 /**
  * Create socket and begin listening for new connections.
+ * 
  * @this {TcpServer}
  */
 tcpServer.prototype.listen = function() {

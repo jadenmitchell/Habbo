@@ -3,6 +3,8 @@
 /**
  * A more complex Node.js buffering class for easily
  * reading and writing bytes of data to a stream.
+ *
+ * @author Jaden Mitchell
  * @export @final
  * @extends {stream.Duplex}
  */
@@ -26,7 +28,18 @@ class ByteBuf extends stream.Duplex {
     }
 
     /**
+     * The internal buffer.
+     * 
+     * @this {ByteBuf}
+     * @returns {Buffer}
+     */
+    get source() {
+        return this._source;
+    }
+
+    /**
      * The length of the buffer
+     *
      * @this {ByteBuf}
      * @returns {number}
      */
@@ -36,6 +49,7 @@ class ByteBuf extends stream.Duplex {
 
     /**
      * The reader/writer offset
+     * 
      * @this {ByteBuf}
      * @returns {number}
      */
@@ -44,8 +58,9 @@ class ByteBuf extends stream.Duplex {
     }
 
     /**
-     * Dispose/null the stream and the variables defined in
+     * Dispose of the stream and the variables defined in
      * this class.
+     * 
      * @this {ByteBuf}
      * @private
      */
@@ -57,37 +72,43 @@ class ByteBuf extends stream.Duplex {
 
     /**
      * Pull data from the internal buffer.
+     * 
      * @param size specify how much data to read
      * @private
      */
     _read(size) {
-        if (this._offset < this._length) {
+        if (this._offset <= this._length) {
             this.push(this._source.slice(this._offset, (this._offset + 1)));
             this._offset++;
         }
 
-        if (this._offset >= this._length) {
+        if (this._offset > this._length) {
             this.push(null);
         }
     }
 
     /**
      * Write data to the stream.
+     * 
      * @param chunk data to be written
      * @param encoding encoding if chuck is a string
      * @param callback callback when the chunk of data is flushed
      * @private
      */
     _write(chunk, encoding, callback) {
-        // The underlying source only deals with strings
-        if (Buffer.isBuffer(chunk))
-            chunk = chunk.toString();
-        // do something with the data.
+        // The underlying source only deals with buffers
+        if (!Buffer.isBuffer(chunk))
+            chunk = new Buffer(chunk, encoding);
+
+        this._source = Buffer.concat([this._source, chunk]);
+        this._length = this._source.length;
+
         callback();
     }
 
     /**
      * Resets the reader/writer offset to 0.
+     * 
      * @this {ByteBuf}
      */
     resetIndex() {
@@ -96,6 +117,7 @@ class ByteBuf extends stream.Duplex {
 
     /**
      * Increments the reader/writer offset.
+     * 
      * @this {ByteBuf}
      * @param size amount of bytes to skip over
      */
@@ -105,6 +127,7 @@ class ByteBuf extends stream.Duplex {
 
     /**
      * Decrements the reader/writer offset.
+     * 
      * @this {ByteBuf}
      * @param size amount of bytes to jump back
      */
@@ -114,42 +137,47 @@ class ByteBuf extends stream.Duplex {
 
     /**
      * Read a byte from the source buffer.
+     * 
      * @this {ByteBuf}
-     * @returns {Number|number} byte in form of a char code
+     * @returns {number} byte in form of a char code
      */
     readByte() {
         return this.read(1)[0];
     }
 
     /**
-     * Read a 32-bit integer from the source buffer.
+     * Read an integer from the source buffer.
+     * 
      * @this {ByteBuf}
-     * @returns {Number|number} 4 bytes in the form of a signed integer
+     * @returns {number} 4 bytes in the form of a signed integer
      */
     readInt() {
         return this.read(4).readInt32BE();
     }
 
     /**
-     * Reads a 32-bit unsigned integer from the source buffer.
+     * Read an unsigned integer from the source buffer.
+     * 
      * @this {ByteBuf}
-     * @returns {Number|number} 4 bytes in the form of a unsigned (positive) integer
+     * @returns {number} 4 bytes in the form of a unsigned (positive) integer
      */
     readUInt() {
         return this.read(4).readUInt32BE();
     }
 
     /**
-     * Reads a 16-bit short from the source buffer.
+     * Read an short from the source buffer.
+     * 
      * @this {ByteBuf}
-     * @returns {Number|number} 2 bytes in the form of a short
+     * @returns {number} 2 bytes in the form of a short
      */
     readShort() {
         return this.read(2).readInt16BE();
     }
 
     /**
-     * Reads x amount of bytes from the source buffer.
+     * Reads bytes from the source buffer.
+     * 
      * @this {ByteBuf}
      * @param size the amount of bytes to read
      * @returns {Buffer}
@@ -160,6 +188,7 @@ class ByteBuf extends stream.Duplex {
 
     /**
      * Read the rest of the source buffer from the reader index.
+     * 
      * @this {ByteBuf}
      * @returns {Buffer} bytes that are left in the buffer
      */
@@ -167,8 +196,56 @@ class ByteBuf extends stream.Duplex {
         return this.read(this._length - this._offset);
     }
 
+    /**
+     * Write a byte to the source buffer.
+     * 
+     * @this {ByteBuf}
+     * @param value data to write
+     */
     writeByte(value) {
-        // todo.
+        this.write(String.fromCharCode(value), 'utf-8');
+    }
+
+    /**
+     * Write an integer to the source buffer.
+     * 
+     * @param value data to write
+     */
+    writeInt(value) {
+        const buf = Buffer.alloc(4);
+        buf.writeInt32BE(value);
+        this.write(buf);
+    }
+
+    /**
+     * Write an unsigned integer to the source buffer.
+     * 
+     * @param value data to write
+     */
+    writeUInt(value) {
+        const buf = Buffer.alloc(4);
+        buf.writeUInt32BE(value);
+        this.write(buf);
+    }
+
+    /**
+     * Write an short to the source buffer.
+     * 
+     * @param value data to write
+     */
+    writeShort(value) {
+        const buf = Buffer.alloc(2);
+        buf.writeInt16BE(value);
+        this.write(buf);
+    }
+
+    /**
+     * Write bytes to the source buffer.
+     * 
+     * @param value buffer to write
+     */
+    writeBytes(value) {
+        this.write(value);
     }
 }
 

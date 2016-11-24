@@ -8,6 +8,7 @@ const assert = require('assert');
 /**
  * Packet list where the key is the header, and the
  * value is the packet event handler function.
+ * 
  * @type {Array}
  */
 const packets = [];
@@ -15,6 +16,7 @@ const packets = [];
 /**
  * Get a list of files in a directory and its subdirectories
  * using parallel and recursive file reading.
+ * 
  * @param dir the directory we start searching in
  * @param filter exclude any files with certain name qualities
  * @param done the results, list of files by name
@@ -46,6 +48,7 @@ function readFilesRecur(dir, filter, done) {
 /**
  * Remove redundant and/or invalid files from the list.
  * Packet criteria requires certain file naming standards.
+ * 
  * @param list files found in the directory
  * @returns {Array.<String>} filtered list
  */
@@ -55,10 +58,22 @@ function filterPacketFile(list) {
     });
 }
 
+/**
+ * Get packet handler associated.
+ *
+ * @param header key for packets
+ * @returns {function} packet handler
+ * @exports
+ */
 function getPacketHandlerAssoc(header) {
     return packets[header];
 }
 
+/**
+ * Load packet handlers with reflection.
+ * 
+ * @exports
+ */
 async function loadPacketHandlers() {
     readFilesRecur('./lib/game/incoming', filterPacketFile, (err, results) => {
         // todo: better error handling for packet initialization.
@@ -72,11 +87,10 @@ async function loadPacketHandlers() {
                 packets[eventHandler.serial] = eventHandler.handle;
                 logger.info('Registered packet event (%s)', eventHandler.handle.name);
                 // todo: allow own static function names using getOwnPropertyNames()
-                 /*
-                 const properties = Object.getOwnPropertyNames(eventHandler);
-                 properties.forEach((element) => {
-                console.log(element);
-            });*/
+                /*const properties = Object.getOwnPropertyNames(eventHandler);
+                properties.forEach((element) => {
+                    console.log(element);
+                });*/
             }
         });
     });

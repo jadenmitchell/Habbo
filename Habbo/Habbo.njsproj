@@ -40,6 +40,8 @@
     <Compile Include="lib\game\incoming\handshake\version_check.js" />
     <Compile Include="lib\game\incoming\incoming.js" />
     <Compile Include="lib\game\incoming\incoming_packet.js" />
+    <Compile Include="lib\game\outgoing\outgoing.js" />
+    <Compile Include="lib\game\outgoing\outgoing_packet.js" />
     <Compile Include="lib\game\packet.js" />
     <Compile Include="lib\game\packet_info.js" />
     <Compile Include="lib\models\index.js" />

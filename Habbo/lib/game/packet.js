@@ -13,7 +13,8 @@ class Packet {
     }
 
     /**
-     * Packet header
+     * Packet header.
+     * 
      * @this {Packet}
      * @returns {number}
      */
@@ -22,7 +23,8 @@ class Packet {
     }
 
     /**
-     * Packet length
+     * Packet length.
+     * 
      * @this {Packet}
      * @returns {number}
      */
@@ -32,6 +34,7 @@ class Packet {
 
     /**
      * Is the packet buffer corrupt?
+     * 
      * @this {Packet}
      * @returns {boolean}
      */

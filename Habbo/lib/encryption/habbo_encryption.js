@@ -11,7 +11,8 @@ const key = new Rsa({
 });
 
 /**
- * Signs the bytes of a string
+ * Signs the bytes of a string.
+ * 
  * @param str plaintext string
  * @returns {string} encrypted hex signature
  */

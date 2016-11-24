@@ -7,6 +7,7 @@ class IncomingPacket extends Packet {
 
     /**
      * Remaining amount of bytes.
+     * 
      * @this {IncomingPacket}
      * @returns {number} length - offset
      */
@@ -16,6 +17,7 @@ class IncomingPacket extends Packet {
 
     /**
      * Reads a boolean from the packet buffer.
+     * 
      * @this {IncomingPacket}
      * @returns {boolean} true/1 or false/0
      */
@@ -25,6 +27,7 @@ class IncomingPacket extends Packet {
 
     /**
      * Reads an integer from the packet buffer.
+     * 
      * @this {IncomingPacket}
      * @returns {Number|number}
      */
@@ -34,6 +37,7 @@ class IncomingPacket extends Packet {
 
     /**
      * Reads an positive integer from the packet buffer.
+     * 
      * @returns {Number|number}
      */
     readUInt() {
@@ -42,6 +46,7 @@ class IncomingPacket extends Packet {
 
     /**
      * Reads a short from the packet buffer.
+     * 
      * @returns {Number|number}
      */
     readShort() {
@@ -50,6 +55,7 @@ class IncomingPacket extends Packet {
 
     /**
      * Reads a string from the packet buffer.
+     * 
      * @this {IncomingPacket}
      * @returns {string|String} AOB in the form of a string
      */
