@@ -9,7 +9,7 @@ class Packet {
         assert(buffer instanceof ByteBuf, 'Buffer must be an instance of ByteBuf!');
         this._header = header;
         this._length = length;
-        this._buffer = buffer == null ? new ByteBuf(Buffer.allocUnsafeSlow(6)) : buffer;
+        this._buffer = buffer;
     }
 
     /**

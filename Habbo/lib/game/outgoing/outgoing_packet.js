@@ -1,10 +1,12 @@
 const Packet = require('../packet');
+const ByteBuf = require('../../bytebuf');
 
 class OutgoingPacket extends Packet {
     constructor(header) {
-        super(header, 0, null);
+        super(header, 0, new ByteBuf(new Buffer(0)));
         this._buffer.writeInt(0);
         this._buffer.writeShort(header);
+        console.log(this._buffer.source);
         this._finalized = false;
     }
 
@@ -25,13 +27,19 @@ class OutgoingPacket extends Packet {
     }
 
     writeString(value) {
-        const buf = new Buffer(value.length + 2);
+        const buf = new Buffer(value.length);
         this._buffer.writeShort(value.length);
         this._buffer.writeBytes(buf);
     }
 
     wrap() {
-        const buf = new Buffer(this._buffer.source);
+        let buf = new Buffer.alloc(4);
+        buf.writeInt32BE(this._buffer.length);
+        let buf2 = this._buffer.source.slice(5);
+        buf = Buffer.concat([buf, buf2]);
+        console.log(buf);
+        this._finalized = true;
+        return buf;
     }
 }
 

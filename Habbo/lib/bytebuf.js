@@ -9,8 +9,10 @@
  * @extends {stream.Duplex}
  */
 class ByteBuf extends stream.Duplex {
+
     /**
      * Create a duplex stream for our buffer.
+     *
      * @param source network buffer
      */
     constructor(source) {
@@ -73,7 +75,7 @@ class ByteBuf extends stream.Duplex {
     /**
      * Pull data from the internal buffer.
      * 
-     * @param size specify how much data to read
+     * @param size buffer size high watermark
      * @private
      */
     _read(size) {
@@ -100,7 +102,7 @@ class ByteBuf extends stream.Duplex {
         if (!Buffer.isBuffer(chunk))
             chunk = new Buffer(chunk, encoding);
 
-        this._source = Buffer.concat([this._source, chunk]);
+        this._source = Buffer.concat([this._source.slice(this._offset, this._length), chunk]);
         this._length = this._source.length;
 
         callback();
@@ -133,6 +135,16 @@ class ByteBuf extends stream.Duplex {
      */
     decrementIndex(size) {
         this.incrementIndex(-size);
+    }
+
+    /**
+     * Reverses the data in the source buffer.
+     *
+     * @this {ByteBuf}
+     */
+    reverse() {
+        Array.prototype.reverse.call(this._source);
+        this._offset = 0;
     }
 
     /**

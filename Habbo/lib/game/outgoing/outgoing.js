@@ -1,3 +1,10 @@
-/**
- * Created by cshaw on 11/23/2016.
- */
+
+const initDiffieHandshakeMessageComposer = 675;
+
+class Outgoing {
+    static get InitDiffieHandshakeMessageComposer() {
+        return initDiffieHandshakeMessageComposer;
+    }
+}
+
+module.exports = Outgoing;

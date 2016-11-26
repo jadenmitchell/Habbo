@@ -1,6 +1,8 @@
-﻿const logger = require('../common/logger');
+﻿const assert = require('assert');
+const logger = require('../common/logger');
 const packetInfo = require('./packet_info');
 const IncomingPacket = require('./incoming/incoming_packet');
+const OutgoingPacket = require('./outgoing/outgoing_packet');
 
 class GameClient {
     constructor(socket) {
@@ -8,7 +10,8 @@ class GameClient {
     }
 
     async sendPacket(packet) {
-
+        assert(packet instanceof OutgoingPacket);
+        this._socket.write(packet.wrap());
     }
 
     async handlePacket(buffer) {

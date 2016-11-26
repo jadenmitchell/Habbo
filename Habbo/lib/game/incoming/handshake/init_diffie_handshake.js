@@ -1,12 +1,11 @@
 const Incoming = require('./../incoming');
-const IncomingPacket = require('./../incoming_packet');
-const HCrypto = require('../../../encryption/habbo_encryption');
+const Encryption = require('../../../encryption/habbo_encryption');
+const InitDiffieHandshakeComposer = require('../../outgoing/handshake/init_diffie_handshake');
 
 async function initCrypto(session, packet) {
-    const prime = HCrypto.getRsaStringEncrypted(HCrypto.Prime);
-    const generator = HCrypto.getRsaStringEncrypted(HCrypto.Generator);
-    console.log(prime);
-    console.log(generator);
+    const prime = Encryption.getRsaStringEncrypted(Encryption.Prime);
+    const generator = Encryption.getRsaStringEncrypted(Encryption.Generator);
+    session.sendPacket(new InitDiffieHandshakeComposer(prime, generator));
 }
 
 /**

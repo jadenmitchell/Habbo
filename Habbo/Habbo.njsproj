@@ -40,6 +40,7 @@
     <Compile Include="lib\game\incoming\handshake\version_check.js" />
     <Compile Include="lib\game\incoming\incoming.js" />
     <Compile Include="lib\game\incoming\incoming_packet.js" />
+    <Compile Include="lib\game\outgoing\handshake\init_diffie_handshake.js" />
     <Compile Include="lib\game\outgoing\outgoing.js" />
     <Compile Include="lib\game\outgoing\outgoing_packet.js" />
     <Compile Include="lib\game\packet.js" />
@@ -60,6 +61,7 @@
     <Folder Include="lib\game\incoming\" />
     <Folder Include="lib\game\incoming\handshake\" />
     <Folder Include="lib\game\outgoing\" />
+    <Folder Include="lib\game\outgoing\handshake\" />
     <Folder Include="lib\models\" />
     <Folder Include="lib\common\" />
     <Folder Include="typings\" />
