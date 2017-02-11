@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="lib\bytebuf.js" />
+    <Compile Include="lib\common\file.js" />
     <Compile Include="lib\encryption\habbo_encryption.js" />
     <Compile Include="lib\game\game_client.js" />
     <Compile Include="lib\game\game_manager.js" />
@@ -44,11 +45,11 @@
     <Compile Include="lib\game\outgoing\outgoing.js" />
     <Compile Include="lib\game\outgoing\outgoing_packet.js" />
     <Compile Include="lib\game\packet.js" />
-    <Compile Include="lib\game\packet_info.js" />
+    <Compile Include="lib\game\packets.js" />
     <Compile Include="lib\models\index.js" />
     <Compile Include="lib\common\logger.js" />
     <Compile Include="lib\server.js" />
-    <Content Include="config\config.json" />
+    <Content Include="config\server.json" />
     <Content Include="LICENSE" />
     <Content Include="package.json" />
     <Content Include="README.md" />

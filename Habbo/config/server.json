@@ -1,19 +1,19 @@
 ﻿{
-  "development": {
+  "test": {
     "dialect": "mysql",
     "storage": "./db.development.sqlite"
   },
-  "test": {
+  "development": {
     "username": "root",
     "password": null,
-    "database": "database_test",
+    "database": "plus_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
     "password": null,
-    "database": "database_production",
+    "database": "plus_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

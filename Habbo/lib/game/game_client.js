@@ -1,6 +1,6 @@
 ﻿const assert = require('assert');
 const logger = require('../common/logger');
-const packetInfo = require('./packet_info');
+const packets = require('./packets');
 const IncomingPacket = require('./incoming/incoming_packet');
 const OutgoingPacket = require('./outgoing/outgoing_packet');
 
@@ -41,7 +41,7 @@ class GameClient {
             return;
         }
 
-        const handler = packetInfo.getPacketHandlerAssoc(packet.header);
+        const handler = packets(packet.header);
         if (handler === undefined) {
             logger.debug('Unhandled packet: %s', packet.header);
             return;
