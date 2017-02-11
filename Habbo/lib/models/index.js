@@ -90,6 +90,12 @@ module.exports = (config) => {
             }
         });
 
+    database = {
+        models: db,
+        sequelize: sequelize,
+        Sequelize: Sequelize
+    };
+
     Object.freeze(database);
     return database;
 };
