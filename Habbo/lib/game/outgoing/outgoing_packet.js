@@ -3,10 +3,8 @@ const ByteBuf = require('../../bytebuf');
 
 class OutgoingPacket extends Packet {
     constructor(header) {
-        super(header, 0, new ByteBuf(new Buffer(0)));
-        this._buffer.writeInt(0);
+        super(header, 0, new ByteBuf(Buffer.alloc(2)));
         this._buffer.writeShort(header);
-        console.log(this._buffer.source);
         this._finalized = false;
     }
 
@@ -33,13 +31,18 @@ class OutgoingPacket extends Packet {
     }
 
     wrap() {
-        let buf = new Buffer.alloc(4);
-        buf.writeInt32BE(this._buffer.length);
-        let buf2 = this._buffer.source.slice(5);
-        buf = Buffer.concat([buf, buf2]);
-        console.log(buf);
-        this._finalized = true;
-        return buf;
+        if (!this._finalized) {
+            const buf = new Buffer.alloc(4);
+            buf.writeInt32BE(this.length, 0);
+            const obj = new ByteBuf(Buffer.concat([buf, this._buffer.source]));
+            this._buffer._destroy();
+            this._finalized = obj;
+            console.log(obj.readInt());
+            Object.freeze(this._finalized);
+            return obj.source;
+        }
+        
+        return this._finalized.source;
     }
 }
 

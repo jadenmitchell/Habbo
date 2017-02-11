@@ -45,7 +45,7 @@ module.exports = (config) => {
     if (!config)
         return null;
 
-    logger.info('Connecting to the database: ' + config[environment]['database']);
+    logger.debug('Connecting to the database: %s', config[environment]['database']);
 
     const sequelize = new Sequelize(config[environment]['database'],
         config[environment]['username'],
@@ -62,7 +62,7 @@ module.exports = (config) => {
     sequelize
         .authenticate()
         .then(function (err) {
-            logger.info('Connection has been established successfully.');
+            logger.debug('Connection has been established successfully.');
         })
         .catch(function (err) {
             logger.error('Unable to connect to the database.', err);

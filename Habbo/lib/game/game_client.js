@@ -47,6 +47,7 @@ class GameClient {
             return;
         }
 
+        logger.debug('Incoming packet: %s', handler.name);
         await handler(this, packet);
     }
 }

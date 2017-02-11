@@ -119,7 +119,13 @@ class ByteBuf extends stream.Duplex {
         if (!Buffer.isBuffer(chunk))
             chunk = new Buffer(chunk, encoding);
 
-        this._source = Buffer.concat([this._source.slice(this._offset, this._length), chunk]);
+        if (this._offset > 0) {
+            // buff.copy will replace this in the future.
+            chunk = Buffer.concat([chunk, this._source.slice(this._offset, this._length)]);
+            this._source = Buffer.concat([this._source.slice(0, this._offset), chunk]);
+        }
+        else this._source = Buffer.concat([this._source.slice(0, this._offset), chunk]);
+
         this._length = this._source.length;
 
         callback();
