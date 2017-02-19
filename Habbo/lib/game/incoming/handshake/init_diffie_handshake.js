@@ -3,9 +3,8 @@ const Encryption = require('../../../encryption/habbo_encryption');
 const InitDiffieHandshakeComposer = require('../../outgoing/handshake/init_diffie_handshake');
 
 async function initCrypto(session, packet) {
-    const prime = Encryption.getRsaStringEncrypted(Encryption.Prime);
-    const generator = Encryption.getRsaStringEncrypted(Encryption.Generator);
-    session.sendPacket(new InitDiffieHandshakeComposer(prime, generator));
+    const token = Encryption.getRsaStringEncrypted(Encryption.Prime);
+    session.sendPacket(new InitDiffieHandshakeComposer(token));
 }
 
 /**

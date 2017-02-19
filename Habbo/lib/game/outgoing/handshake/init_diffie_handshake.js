@@ -2,10 +2,10 @@
 const OutgoingPacket = require('../outgoing_packet');
 
 class InitDiffieHandshakeComposer extends OutgoingPacket {
-    constructor(prime, generator) {
+    constructor(token) {
         super(Outgoing.InitDiffieHandshakeMessageComposer);
-        super.writeString(prime);
-        super.writeString(generator);
+        super.writeString(token);
+        super.writeBoolean(false);
     }
 }
 

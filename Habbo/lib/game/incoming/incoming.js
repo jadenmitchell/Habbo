@@ -1,6 +1,6 @@
 
 const versionCheckMessageEvent = 4000;
-const initDiffieHandshakeMessageEvent = 316;
+const initDiffieHandshakeMessageEvent = 1525;
 const completeDiffieHandshakeMessageEvent = 3847;
 
 class Incoming {

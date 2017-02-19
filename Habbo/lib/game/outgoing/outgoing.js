@@ -1,5 +1,5 @@
 
-const initDiffieHandshakeMessageComposer = 675;
+const initDiffieHandshakeMessageComposer = 1030;
 
 class Outgoing {
     static get InitDiffieHandshakeMessageComposer() {

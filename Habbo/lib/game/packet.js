@@ -33,6 +33,15 @@ class Packet {
     }
 
     /**
+     * Set the packet length.
+     *
+     * @this {Packet}
+     */
+    set length(value) {
+        this._length = value;
+    }
+
+    /**
      * Is the packet buffer corrupt?
      * 
      * @this {Packet}

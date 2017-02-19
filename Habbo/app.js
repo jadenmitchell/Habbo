@@ -16,6 +16,7 @@
 'use strict';
 
 const config = require('./config/server.json');
+const logger = require('./lib/common/logger');
 const model = require('./lib/models');
 const packets = require('./lib/game/packets');
 const TcpServer = require('./lib/server');
@@ -25,3 +26,16 @@ packets();
 
 const tcpServer = new TcpServer(3001, 10);
 tcpServer.listen();
+
+if (global.gc) {
+    logger.debug('Forced garbage collection for your Node.js app is available and will be used.');
+} else {
+    logger.debug('Garbage collection unavailable.  Pass --expose-gc '
+        + 'when launching node to enable forced garbage collection.');
+}
+
+const stdin = process.openStdin();
+
+stdin.addListener('data', function (input) {
+    const command = input.toString().trim();
+});

@@ -119,13 +119,10 @@ class ByteBuf extends stream.Duplex {
         if (!Buffer.isBuffer(chunk))
             chunk = new Buffer(chunk, encoding);
 
-        if (this._offset > 0) {
-            // buff.copy will replace this in the future.
-            chunk = Buffer.concat([chunk, this._source.slice(this._offset, this._length)]);
-            this._source = Buffer.concat([this._source.slice(0, this._offset), chunk]);
-        }
-        else this._source = Buffer.concat([this._source.slice(0, this._offset), chunk]);
-
+        chunk = Buffer.concat([chunk, this._source.slice(this._offset, this._length)]);
+        this._source = Buffer.concat([this._source.slice(0, this._offset), chunk]);
+        this._offset += chunk.length;
+        
         this._length = this._source.length;
 
         callback();
@@ -158,6 +155,15 @@ class ByteBuf extends stream.Duplex {
      */
     decrementIndex(size) {
         this.incrementIndex(-size);
+    }
+
+    /**
+     * Configure the ByteBuf class for writing operations.
+     * 
+     * @this {ByteBuf}
+     */
+    writer() {
+        this._offset = this.length;
     }
 
     /**
@@ -229,6 +235,26 @@ class ByteBuf extends stream.Duplex {
      */
     readToEnd() {
         return this.read(this._length - this._offset);
+    }
+
+    /**
+     * Fill in the zero-filled buffer with another value.
+     *
+     * @this {ByteBuf}
+     * @param value data to write
+     * @param offset where to start filling
+     * @param end where to stop filling
+     * @param encoding value string encoding def 'utf8'
+     */
+    fill(value, offset, end, encoding) {
+        if (!offset)
+            offset = 0;
+        if (!end)
+            end = this._source.length;
+        if (!encoding)
+            encoding = null;
+
+        this._source.fill(value, offset, end, encoding);
     }
 
     /**
