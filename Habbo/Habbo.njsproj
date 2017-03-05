@@ -55,7 +55,25 @@
     <Compile Include="lib\game\incoming\handshake\version_check.js" />
     <Compile Include="lib\game\incoming\incoming.js" />
     <Compile Include="lib\game\incoming\incoming_packet.js" />
+    <Compile Include="lib\game\outgoing\availability\availability_status.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\game\outgoing\handshake\authentication_ok.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\game\outgoing\handshake\complete_diffie_handshake.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\game\outgoing\handshake\user_rights.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\game\outgoing\inventory\avatareffect\avatar_effects.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\game\outgoing\navigator\favorites.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\game\outgoing\navigator\navigator_settings.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\game\outgoing\notifications\habbo_broadcast.js">
@@ -64,6 +82,12 @@
     <Compile Include="lib\game\outgoing\handshake\init_diffie_handshake.js" />
     <Compile Include="lib\game\outgoing\outgoing.js" />
     <Compile Include="lib\game\outgoing\outgoing_packet.js" />
+    <Compile Include="lib\game\outgoing\users\get_minimail_message_count.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\game\outgoing\users\scr_send_user_info.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\game\packet.js" />
     <Compile Include="lib\game\packets.js" />
     <Compile Include="lib\models\index.js" />
@@ -83,6 +107,11 @@
     <Folder Include="lib\game\incoming\handshake\" />
     <Folder Include="lib\game\outgoing\" />
     <Folder Include="lib\game\outgoing\handshake\" />
+    <Folder Include="lib\game\outgoing\availability\" />
+    <Folder Include="lib\game\outgoing\inventory\avatareffect\" />
+    <Folder Include="lib\game\outgoing\navigator\" />
+    <Folder Include="lib\game\outgoing\inventory\" />
+    <Folder Include="lib\game\outgoing\users\" />
     <Folder Include="lib\game\outgoing\notifications\" />
     <Folder Include="lib\models\" />
     <Folder Include="lib\common\" />

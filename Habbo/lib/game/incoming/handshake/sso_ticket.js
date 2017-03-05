@@ -4,7 +4,8 @@ const HabboBroadcastComposer = require('../../outgoing/notifications/habbo_broad
 async function tryLogin(session, packet) {
     const ssoTicket = packet.readString();
 
-    session.sendPacket(new HabboBroadcastComposer('There was an error while logging you in.'));
+    if (!session.tryLogin(ssoTicket))
+        session.sendPacket(new HabboBroadcastComposer('There was an error while logging you in.'));
 }
 
 /**d

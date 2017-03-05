@@ -21,6 +21,15 @@ const packets = require('./packets');
 const IncomingPacket = require('./incoming/incoming_packet');
 const OutgoingPacket = require('./outgoing/outgoing_packet');
 const rc4 = require('../encryption/rc4');
+const AuthenticationOKComposer = require('./outgoing/handshake/authentication_ok');
+const AvailabilityStatusComposer = require('./outgoing/availability/availability_status');
+const NavigatorSettingsComposer = require('./outgoing/navigator/navigator_settings');
+const UserRightsComposer = require('./outgoing/handshake/user_rights');
+const AvatarEffectsComposer = require('./outgoing/inventory/avatareffect/avatar_effects');
+const GetMinimailMessageCountComposer = require('./outgoing/users/get_minimail_message_count');
+const ScrSendUserInfoComposer = require('./outgoing/users/scr_send_user_info');
+const FavoritesComposer = require('./outgoing/navigator/favorites');
+const HabboBroadcastComposer = require('./outgoing/notifications/habbo_broadcast');
 
 class GameClient {
     constructor(socket) {
@@ -34,6 +43,7 @@ class GameClient {
     sendPacket(packet) {
         assert(packet instanceof OutgoingPacket);
         this.sendData(packet.wrap());
+        return this;
     }
 
     sendData(data) {
@@ -44,6 +54,19 @@ class GameClient {
     enableRC4(sharedKey) {
         this._rc4 = new rc4.Engine();
         this._rc4.init(sharedKey);
+    }
+
+    tryLogin(ssoTicket) {
+        this.sendPacket(new AuthenticationOKComposer())
+            .sendPacket(new AvailabilityStatusComposer())
+            .sendPacket(new NavigatorSettingsComposer(0))
+            .sendPacket(new UserRightsComposer(true, true, false))
+            .sendPacket(new AvatarEffectsComposer(null))
+            .sendPacket(new GetMinimailMessageCountComposer());
+        this.sendPacket(new ScrSendUserInfoComposer());
+        this.sendPacket(new FavoritesComposer(null));
+        this.sendPacket(new HabboBroadcastComposer('Habbo Emulator Node.js by Jaden @ devbest.com'));
+        return true;
     }
 
     async handlePacket(buffer) {
