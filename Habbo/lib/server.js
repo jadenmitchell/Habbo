@@ -47,6 +47,10 @@ tcpServer.prototype.listen = function() {
 
         socket.on('data',
             (data) => {
+                if (socket.session.rc4) {
+                    //data = socket.session.rc4.decrypt(data);
+                }
+
                 let buffer = Buffer.from(data);
                 buffer = new ByteBuf(buffer);
 

@@ -9,4 +9,4 @@ class InitDiffieHandshakeComposer extends OutgoingPacket {
     }
 }
 
-module.exports = InitDiffieHandshakeComposer
+module.exports = InitDiffieHandshakeComposer;

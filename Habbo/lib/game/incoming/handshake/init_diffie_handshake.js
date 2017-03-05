@@ -1,9 +1,9 @@
 const Incoming = require('./../incoming');
-const Encryption = require('../../../encryption/habbo_encryption');
+const HabboEncryption = require('../../../encryption/habbo_encryption');
 const InitDiffieHandshakeComposer = require('../../outgoing/handshake/init_diffie_handshake');
 
 async function initCrypto(session, packet) {
-    const token = Encryption.getRsaStringEncrypted(Encryption.Prime);
+    const token = '9875802655200380'; // HabboEncryption.getRsaStringEncrypted(Encryption.Prime);
     session.sendPacket(new InitDiffieHandshakeComposer(token));
 }
 

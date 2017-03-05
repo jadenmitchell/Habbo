@@ -45,7 +45,7 @@ class ByteBuf extends stream.Duplex {
 
         this.on('end', this._destroy);
     }
-
+    
     /**
      * The internal buffer.
      * 
@@ -74,6 +74,20 @@ class ByteBuf extends stream.Duplex {
      */
     get index() {
         return this._offset;
+    }
+
+    /**
+     * Convert a ByteBuf or Buffer object to an AOB.
+
+     * @param {ByteBuf|Buffer} buffer the buffer to convert
+     * @returns {Array} array of bytes.
+     */
+    static aob(source) {
+        // assert source is Buffer or ByteBuf.
+        const result = [];
+        for (var i = 0; i < source.length; i++)
+            result.push(source[i]);
+        return result;
     }
 
     /**

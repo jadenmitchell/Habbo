@@ -3,7 +3,7 @@ const ByteBuf = require('../../bytebuf');
 
 class OutgoingPacket extends Packet {
     constructor(header) {
-        super(header, 0, new ByteBuf(Buffer.alloc(2)));
+        super(header, 0, new ByteBuf(Buffer.alloc(0)));
         this._buffer.writer();
         this._buffer.writeShort(header);
     }
@@ -15,7 +15,7 @@ class OutgoingPacket extends Packet {
      * @param value bool, byte, or integer value
      */
     writeBoolean(value) {
-        this._buffer.writeByte(+value);
+        this._buffer.writeByte(Buffer.from(String.fromCharCode(value)));
     }
 
     /**
@@ -55,8 +55,9 @@ class OutgoingPacket extends Packet {
      * @param value string value to write.
      */
     writeString(value) {
-        const buf = new Buffer(value.length);
-        this._buffer.writeShort(value.length);
+        const buf = Buffer.alloc(value.length + 2);
+        buf.writeInt16BE(value.length, 0);
+        buf.write(value, 2);
         this._buffer.writeBytes(buf);
     }
 
@@ -67,9 +68,7 @@ class OutgoingPacket extends Packet {
      */
     wrap() {
         this._buffer.resetIndex();
-        this._buffer.writeInt(this._buffer.length + 4);
-        let obj = new ByteBuf(Buffer.from(this._buffer.source));
-        console.log(this._buffer._source.entries());
+        this._buffer.writeInt(this._buffer.length);
         return this._buffer.source;
     }
 }

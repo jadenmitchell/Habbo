@@ -15,8 +15,8 @@
   "homepage": "https://github.com/jadenmitchell/Habbo#readme",
   "dependencies": {
     "async": "^2.1.4",
+    "jsbn": "^1.1.0",
     "mysql": "^2.13.0",
-    "node-rsa": "^0.4.2",
     "sequelize": "^3.30.2",
     "winston": "^2.3.0"
   }

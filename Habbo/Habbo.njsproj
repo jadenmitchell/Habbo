@@ -32,15 +32,35 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
+    <Compile Include="client.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\bytebuf.js" />
     <Compile Include="lib\common\file.js" />
     <Compile Include="lib\encryption\habbo_encryption.js" />
+    <Compile Include="lib\encryption\rc4.js" />
+    <Compile Include="lib\encryption\rsa.js" />
     <Compile Include="lib\game\game_client.js" />
     <Compile Include="lib\game\game_manager.js" />
+    <Compile Include="lib\game\incoming\handshake\complete_diffie_handshake.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\game\incoming\handshake\init_diffie_handshake.js" />
+    <Compile Include="lib\game\incoming\handshake\sso_ticket.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\game\incoming\handshake\unique_id.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\game\incoming\handshake\version_check.js" />
     <Compile Include="lib\game\incoming\incoming.js" />
     <Compile Include="lib\game\incoming\incoming_packet.js" />
+    <Compile Include="lib\game\outgoing\handshake\complete_diffie_handshake.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\game\outgoing\notifications\habbo_broadcast.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\game\outgoing\handshake\init_diffie_handshake.js" />
     <Compile Include="lib\game\outgoing\outgoing.js" />
     <Compile Include="lib\game\outgoing\outgoing_packet.js" />
@@ -63,6 +83,7 @@
     <Folder Include="lib\game\incoming\handshake\" />
     <Folder Include="lib\game\outgoing\" />
     <Folder Include="lib\game\outgoing\handshake\" />
+    <Folder Include="lib\game\outgoing\notifications\" />
     <Folder Include="lib\models\" />
     <Folder Include="lib\common\" />
     <Folder Include="typings\" />
