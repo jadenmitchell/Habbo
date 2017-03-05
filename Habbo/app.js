@@ -18,7 +18,7 @@
 const config = require('./config/server.json');
 const logger = require('./lib/common/logger');
 const model = require('./lib/models');
-const packets = require('./lib/game/packets');
+const packets = require('./lib/messages/packets');
 const TcpServer = require('./lib/server');
 
 model(config);

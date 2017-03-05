@@ -4,11 +4,11 @@
     "storage": "./db.development.sqlite"
   },
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "plus_db",
+    "username": "postgres",
+    "password": "bhwNCSxLtM6z4g#4",
+    "database": "habbo_db",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "production": {
     "username": "root",

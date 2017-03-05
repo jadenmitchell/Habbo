@@ -17,19 +17,19 @@
 
 const assert = require('assert');
 const logger = require('../common/logger');
-const packets = require('./packets');
-const IncomingPacket = require('./incoming/incoming_packet');
-const OutgoingPacket = require('./outgoing/outgoing_packet');
+const packets = require('../messages/packets');
+const IncomingPacket = require('../messages/incoming/incoming_packet');
+const OutgoingPacket = require('../messages/outgoing/outgoing_packet');
 const rc4 = require('../encryption/rc4');
-const AuthenticationOKComposer = require('./outgoing/handshake/authentication_ok');
-const AvailabilityStatusComposer = require('./outgoing/availability/availability_status');
-const NavigatorSettingsComposer = require('./outgoing/navigator/navigator_settings');
-const UserRightsComposer = require('./outgoing/handshake/user_rights');
-const AvatarEffectsComposer = require('./outgoing/inventory/avatareffect/avatar_effects');
-const GetMinimailMessageCountComposer = require('./outgoing/users/get_minimail_message_count');
-const ScrSendUserInfoComposer = require('./outgoing/users/scr_send_user_info');
-const FavoritesComposer = require('./outgoing/navigator/favorites');
-const HabboBroadcastComposer = require('./outgoing/notifications/habbo_broadcast');
+const AuthenticationOKComposer = require('../messages/outgoing/handshake/authentication_ok');
+const AvailabilityStatusComposer = require('../messages/outgoing/availability/availability_status');
+const NavigatorSettingsComposer = require('../messages/outgoing/navigator/navigator_settings');
+const UserRightsComposer = require('../messages/outgoing/handshake/user_rights');
+const AvatarEffectsComposer = require('../messages/outgoing/inventory/avatareffect/avatar_effects');
+const GetMinimailMessageCountComposer = require('../messages/outgoing/users/get_minimail_message_count');
+const ScrSendUserInfoComposer = require('../messages/outgoing/users/scr_send_user_info');
+const FavoritesComposer = require('../messages/outgoing/navigator/favorites');
+const HabboBroadcastComposer = require('../messages/outgoing/notifications/habbo_broadcast');
 
 class GameClient {
     constructor(socket) {

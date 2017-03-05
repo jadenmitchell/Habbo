@@ -42,7 +42,7 @@ function getPacketHandler(header) {
  * @exports
  */
 async function loadPacketHandlers() {
-    fileAsync.recursive('./lib/game/incoming',
+    fileAsync.recursive('./lib/messages/incoming',
         filterPacketFile,
         (err, results) => {
             // todo: better error handling for packet initialization.

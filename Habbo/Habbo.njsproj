@@ -32,9 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
-    <Compile Include="client.js">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="lib\bytebuf.js" />
     <Compile Include="lib\common\file.js" />
     <Compile Include="lib\encryption\habbo_encryption.js" />
@@ -42,54 +39,54 @@
     <Compile Include="lib\encryption\rsa.js" />
     <Compile Include="lib\game\game_client.js" />
     <Compile Include="lib\game\game_manager.js" />
-    <Compile Include="lib\game\incoming\handshake\complete_diffie_handshake.js">
+    <Compile Include="lib\messages\incoming\handshake\complete_diffie_handshake.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\incoming\handshake\init_diffie_handshake.js" />
-    <Compile Include="lib\game\incoming\handshake\sso_ticket.js">
+    <Compile Include="lib\messages\incoming\handshake\init_diffie_handshake.js" />
+    <Compile Include="lib\messages\incoming\handshake\sso_ticket.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\incoming\handshake\unique_id.js">
+    <Compile Include="lib\messages\incoming\handshake\unique_id.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\incoming\handshake\version_check.js" />
-    <Compile Include="lib\game\incoming\incoming.js" />
-    <Compile Include="lib\game\incoming\incoming_packet.js" />
-    <Compile Include="lib\game\outgoing\availability\availability_status.js">
+    <Compile Include="lib\messages\incoming\handshake\version_check.js" />
+    <Compile Include="lib\messages\incoming\incoming.js" />
+    <Compile Include="lib\messages\incoming\incoming_packet.js" />
+    <Compile Include="lib\messages\outgoing\availability\availability_status.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\outgoing\handshake\authentication_ok.js">
+    <Compile Include="lib\messages\outgoing\handshake\authentication_ok.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\outgoing\handshake\complete_diffie_handshake.js">
+    <Compile Include="lib\messages\outgoing\handshake\complete_diffie_handshake.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\outgoing\handshake\user_rights.js">
+    <Compile Include="lib\messages\outgoing\handshake\user_rights.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\outgoing\inventory\avatareffect\avatar_effects.js">
+    <Compile Include="lib\messages\outgoing\inventory\avatareffect\avatar_effects.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\outgoing\navigator\favorites.js">
+    <Compile Include="lib\messages\outgoing\navigator\favorites.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\outgoing\navigator\navigator_settings.js">
+    <Compile Include="lib\messages\outgoing\navigator\navigator_settings.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\outgoing\notifications\habbo_broadcast.js">
+    <Compile Include="lib\messages\outgoing\notifications\habbo_broadcast.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\outgoing\handshake\init_diffie_handshake.js" />
-    <Compile Include="lib\game\outgoing\outgoing.js" />
-    <Compile Include="lib\game\outgoing\outgoing_packet.js" />
-    <Compile Include="lib\game\outgoing\users\get_minimail_message_count.js">
+    <Compile Include="lib\messages\outgoing\handshake\init_diffie_handshake.js" />
+    <Compile Include="lib\messages\outgoing\outgoing.js" />
+    <Compile Include="lib\messages\outgoing\outgoing_packet.js" />
+    <Compile Include="lib\messages\outgoing\users\get_minimail_message_count.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\outgoing\users\scr_send_user_info.js">
+    <Compile Include="lib\messages\outgoing\users\scr_send_user_info.js">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="lib\game\packet.js" />
-    <Compile Include="lib\game\packets.js" />
+    <Compile Include="lib\messages\packet.js" />
+    <Compile Include="lib\messages\packets.js" />
     <Compile Include="lib\models\index.js" />
     <Compile Include="lib\common\logger.js" />
     <Compile Include="lib\server.js" />
@@ -103,18 +100,20 @@
     <Folder Include="config\" />
     <Folder Include="lib\encryption\" />
     <Folder Include="lib\game\" />
-    <Folder Include="lib\game\incoming\" />
-    <Folder Include="lib\game\incoming\handshake\" />
-    <Folder Include="lib\game\outgoing\" />
-    <Folder Include="lib\game\outgoing\handshake\" />
-    <Folder Include="lib\game\outgoing\availability\" />
-    <Folder Include="lib\game\outgoing\inventory\avatareffect\" />
-    <Folder Include="lib\game\outgoing\navigator\" />
-    <Folder Include="lib\game\outgoing\inventory\" />
-    <Folder Include="lib\game\outgoing\users\" />
-    <Folder Include="lib\game\outgoing\notifications\" />
+    <Folder Include="lib\game\players\" />
+    <Folder Include="lib\messages\incoming\" />
+    <Folder Include="lib\messages\incoming\handshake\" />
+    <Folder Include="lib\messages\outgoing\" />
+    <Folder Include="lib\messages\outgoing\handshake\" />
+    <Folder Include="lib\messages\outgoing\availability\" />
+    <Folder Include="lib\messages\outgoing\inventory\avatareffect\" />
+    <Folder Include="lib\messages\outgoing\navigator\" />
+    <Folder Include="lib\messages\outgoing\inventory\" />
+    <Folder Include="lib\messages\outgoing\users\" />
+    <Folder Include="lib\messages\outgoing\notifications\" />
     <Folder Include="lib\models\" />
     <Folder Include="lib\common\" />
+    <Folder Include="lib\messages\" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\async\" />
