@@ -1,8 +1,8 @@
 ﻿const Incoming = require('./../incoming');
 
-async function uniqueID(session, packet) {
-    const junk = packet.readString();
-    const machineId = packet.readString();
+function uniqueID(session, packet) {
+    //const junk = packet.readString();
+    //const machineId = packet.readString();
 }
 
 /**d

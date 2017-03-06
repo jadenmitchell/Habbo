@@ -39,7 +39,13 @@
     <Compile Include="lib\encryption\rsa.js" />
     <Compile Include="lib\game\game_client.js" />
     <Compile Include="lib\game\game_manager.js" />
+    <Compile Include="lib\game\players\player.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\messages\incoming\handshake\complete_diffie_handshake.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\incoming\handshake\info_retrieve.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\messages\incoming\handshake\init_diffie_handshake.js" />

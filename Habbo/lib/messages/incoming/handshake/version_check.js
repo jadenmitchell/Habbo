@@ -1,7 +1,7 @@
 ﻿const Incoming = require('./../incoming');
 const IncomingPacket = require('./../incoming_packet');
 
-async function versionCheck(session, packet) {
+function versionCheck(session, packet) {
     const version = packet.readString();
     console.log(version);
 }

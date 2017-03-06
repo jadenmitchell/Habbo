@@ -4,6 +4,7 @@ const initDiffieHandshakeMessageEvent = 1525;
 const completeDiffieHandshakeMessageEvent = 3557;
 const uniqueIDMessageEvent = 3786;
 const ssoTicketMessageEvent = 1887;
+const infoRetrieveMessageEvent = 3897;
 
 class Incoming {
     static get VersionCheckMessageEvent() {
@@ -24,6 +25,10 @@ class Incoming {
 
     static get SSOTicketMessageEvent() {
         return ssoTicketMessageEvent;
+    }
+
+    static get InfoRetrieveMessageEvent() {
+        return infoRetrieveMessageEvent;
     }
 }
 

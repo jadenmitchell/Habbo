@@ -38,36 +38,53 @@ class GameClient {
     constructor(socket) {
         this._socket = socket;
     }
-
+    
     get rc4() {
         return this._rc4;
     }
 
+    /**
+     * Finalize a packet buffer then send the raw contents to the socket.
+
+     * @param {OutgoingPacket} packet constructed packet object
+     */
     sendPacket(packet) {
         assert(packet instanceof OutgoingPacket);
         this.sendData(packet.wrap());
         return this;
     }
 
+    /**
+     * Send raw buffer data to the player socket.
+     *
+     * @param {Buffer} data buffer to be sent
+     */
     sendData(data) {
         assert(data instanceof Buffer);
         this._socket.write(data);
     }
 
+    /**
+     * Enable and bind the RC4 engine to session using a shared key.
+     *
+     * @param {String|Buffer|Array} sharedKey key used for initializing rc4
+     */
     enableRC4(sharedKey) {
         this._rc4 = new rc4.Engine();
         this._rc4.init(sharedKey);
     }
 
+    /**
+     * Get and cache the player while logging in.
+     *
+     * @param {String} ssoTicket authentication ticket used for querying the user
+     * @returns {Boolean} true if the player was loaded successfully,
+     *                    false otherwise.
+     */
     tryLogin(ssoTicket) {
         User.findAll({
-            where: { 'auth_ticket': ssoTicket },
-            attributes: [
-                'id', 'username', 'motto', 'look', 'auth_ticket'
-            ],
-            //order: [['timestamp_lastvisit']]
-        }).then((u) => {
-            console.log(u);
+            where: { 'auth_ticket': ssoTicket }
+        }).then((user) => {
         });
 
         this.sendPacket(new AuthenticationOKComposer())
@@ -82,6 +99,11 @@ class GameClient {
         return true;
     }
 
+    /**
+     * Handles incoming packet buffers in an asynchronous fashion.
+     *
+     * @param {ByteBuf} buffer boilerplate over the network buffer
+     */
     async handlePacket(buffer) {
         const delimiter = String.fromCharCode(buffer.readByte());
         await buffer.resetIndex();

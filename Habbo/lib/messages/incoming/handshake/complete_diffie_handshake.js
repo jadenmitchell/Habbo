@@ -3,7 +3,7 @@ const HabboEncryption = require('../../../encryption/habbo_encryption');
 const CompleteDiffieHandshakeComposer = require('../../outgoing/handshake/complete_diffie_handshake');
 const BigInteger = require('jsbn').BigInteger;
 
-async function generateSecretKey(session, packet) {
+function generateSecretKey(session, packet) {
     const cipherPublicKey = packet.readString();
     const sharedKey = HabboEncryption.calculateDiffieHellmanSharedKey(cipherPublicKey);
     

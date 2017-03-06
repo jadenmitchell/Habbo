@@ -1,7 +1,7 @@
 ﻿const Incoming = require('./../incoming');
 const HabboBroadcastComposer = require('../../outgoing/notifications/habbo_broadcast');
 
-async function tryLogin(session, packet) {
+function tryLogin(session, packet) {
     const ssoTicket = packet.readString();
 
     if (!session.tryLogin(ssoTicket))
