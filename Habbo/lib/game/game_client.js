@@ -21,6 +21,7 @@ const packets = require('../messages/packets');
 const IncomingPacket = require('../messages/incoming/incoming_packet');
 const OutgoingPacket = require('../messages/outgoing/outgoing_packet');
 const rc4 = require('../encryption/rc4');
+const database = require('../models')();
 const AuthenticationOKComposer = require('../messages/outgoing/handshake/authentication_ok');
 const AvailabilityStatusComposer = require('../messages/outgoing/availability/availability_status');
 const NavigatorSettingsComposer = require('../messages/outgoing/navigator/navigator_settings');
@@ -30,6 +31,8 @@ const GetMinimailMessageCountComposer = require('../messages/outgoing/users/get_
 const ScrSendUserInfoComposer = require('../messages/outgoing/users/scr_send_user_info');
 const FavoritesComposer = require('../messages/outgoing/navigator/favorites');
 const HabboBroadcastComposer = require('../messages/outgoing/notifications/habbo_broadcast');
+
+const User = database.models['User'];
 
 class GameClient {
     constructor(socket) {
@@ -57,6 +60,16 @@ class GameClient {
     }
 
     tryLogin(ssoTicket) {
+        User.findAll({
+            where: { 'auth_ticket': ssoTicket },
+            attributes: [
+                'id', 'username', 'motto', 'look', 'auth_ticket'
+            ],
+            //order: [['timestamp_lastvisit']]
+        }).then((u) => {
+            console.log(u);
+        });
+
         this.sendPacket(new AuthenticationOKComposer())
             .sendPacket(new AvailabilityStatusComposer())
             .sendPacket(new NavigatorSettingsComposer(0))

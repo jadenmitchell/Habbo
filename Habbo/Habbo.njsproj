@@ -89,6 +89,9 @@
     <Compile Include="lib\messages\packets.js" />
     <Compile Include="lib\models\index.js" />
     <Compile Include="lib\common\logger.js" />
+    <Compile Include="lib\models\user.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\server.js" />
     <Content Include="config\server.json" />
     <Content Include="LICENSE" />

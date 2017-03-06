@@ -1,4 +1,6 @@
-﻿/**
+﻿// NOTICE: This class is awaiting deprecation as being replaced by code over convention.
+
+/**
  * Copyright 2016 Jaden M.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

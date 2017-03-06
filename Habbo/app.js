@@ -15,17 +15,24 @@
  */
 'use strict';
 
+const Promise = require('bluebird');
 const config = require('./config/server.json');
 const logger = require('./lib/common/logger');
 const model = require('./lib/models');
 const packets = require('./lib/messages/packets');
-const TcpServer = require('./lib/server');
 
-model(config);
-packets();
+new Promise((resolve, reject) => {
+    model(config).then(database => {
+        resolve();
+    });
 
-const tcpServer = new TcpServer(3001, 10);
-tcpServer.listen();
+    packets();
+}).then(() => {
+    const TcpServer = require('./lib/server');
+    const tcpServer = new TcpServer(3001, 10);
+    tcpServer.listen();
+});;
+
 
 if (global.gc) {
     logger.debug('Forced garbage collection for your Node.js app is available and will be used.');

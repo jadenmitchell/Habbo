@@ -15,7 +15,9 @@
  */
 'use strict';
 
-const fileAsync = require('../common/file');
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
+const path = require('path');
 const logger = require('../common/logger');
 const Sequelize = require('Sequelize');
 
@@ -42,7 +44,7 @@ module.exports = (config) => {
     }
 
     // throw err:
-    if (!config)
+    if (!config && !database)
         return null;
 
     logger.debug('Connecting to the database: %s', config[environment]['database']);
@@ -69,46 +71,39 @@ module.exports = (config) => {
             return null;
         });
 
-    fileAsync.recursive(__dirname,
-        filterModelFile,
-        (err, files) => {
-            if (err) throw err;
-            files.forEach((file) => {
-                var model = sequelize.import(file);
+    return new Promise((resolve, reject) => {
+        const recursive = directory => fs.readdirAsync(directory).filter(file => {
+            return (file.indexOf('.') !== 0) && (file !== 'index.js');
+        }).map(file => {
+            file = path.join(directory, file);
+            return fs.statAsync(file).then(stat => stat.isDirectory() ? recursive(file) : file);
+        }).reduce((a, b) => a.concat(b), []);
+
+        recursive(__dirname)
+            .each((file) => {
+                const model = sequelize.import(file);
                 db[model.name] = model;
 
                 logger.debug(`Loaded the ${model.name} database model.`);
+            })
+            .then(() => {
+                sequelize.sync();
+
+                Object.keys(db)
+                    .forEach(function (modelName) {
+                        if ('associate' in db[modelName]) {
+                            db[modelName].associate(db);
+                        }
+                    });
+                
+                database = {
+                    models: db,
+                    sequelize: sequelize,
+                    Sequelize: Sequelize
+                };
+
+                Object.freeze(database);
+                resolve(database);
             });
-
-            sequelize.sync();
-        });
-
-    Object.keys(db)
-        .forEach(function (modelName) {
-            if ('associate' in db[modelName]) {
-                db[modelName].associate(db);
-            }
-        });
-
-    database = {
-        models: db,
-        sequelize: sequelize,
-        Sequelize: Sequelize
-    };
-
-    Object.freeze(database);
-    return database;
-};
-
-/**
- * Remove redundant and/or invalid files from the list.
- * Model criteria requires certain file naming standards.
- * 
- * @param list files found in the directory
- * @returns {Array.<String>} filtered list
- */
-function filterModelFile(list) {
-    return list.filter((file) => {
-        return (file.indexOf('.') !== 0) && (file !== 'index.js');
     });
-}
+};
