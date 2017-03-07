@@ -42,6 +42,9 @@
     <Compile Include="lib\game\players\player.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lib\game\rooms\room_avatar.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\messages\incoming\handshake\complete_diffie_handshake.js">
       <SubType>Code</SubType>
     </Compile>
@@ -59,6 +62,12 @@
     <Compile Include="lib\messages\incoming\incoming.js" />
     <Compile Include="lib\messages\incoming\incoming_packet.js" />
     <Compile Include="lib\messages\incoming\inventory\purse\get_credits_info.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\incoming\room\engine\get_furniture_aliases.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\incoming\sound\sound_settings.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\messages\outgoing\availability\availability_status.js">
@@ -91,6 +100,9 @@
     <Compile Include="lib\messages\outgoing\navigator\navigator_settings.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lib\messages\outgoing\navigator\room_rating.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\messages\outgoing\notifications\activity_points.js">
       <SubType>Code</SubType>
     </Compile>
@@ -100,6 +112,24 @@
     <Compile Include="lib\messages\outgoing\handshake\init_diffie_handshake.js" />
     <Compile Include="lib\messages\outgoing\outgoing.js" />
     <Compile Include="lib\messages\outgoing\outgoing_packet.js" />
+    <Compile Include="lib\messages\outgoing\room\engine\floor_height_map.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\room\engine\furniture_aliases.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\incoming\room\engine\get_room_entry_data.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\room\engine\height_map.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\room\session\open_connection.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\room\session\room_ready.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\messages\outgoing\users\get_minimail_message_count.js">
       <SubType>Code</SubType>
     </Compile>
@@ -110,6 +140,9 @@
     <Compile Include="lib\messages\packets.js" />
     <Compile Include="lib\models\index.js" />
     <Compile Include="lib\common\logger.js" />
+    <Compile Include="lib\models\rooms\room.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\models\user.js">
       <SubType>Code</SubType>
     </Compile>
@@ -124,11 +157,15 @@
     <Folder Include="config\" />
     <Folder Include="lib\encryption\" />
     <Folder Include="lib\game\" />
+    <Folder Include="lib\game\rooms\" />
     <Folder Include="lib\game\players\" />
     <Folder Include="lib\messages\incoming\" />
     <Folder Include="lib\messages\incoming\handshake\" />
     <Folder Include="lib\messages\incoming\inventory\" />
     <Folder Include="lib\messages\incoming\inventory\purse\" />
+    <Folder Include="lib\messages\incoming\room\" />
+    <Folder Include="lib\messages\incoming\room\engine\" />
+    <Folder Include="lib\messages\incoming\sound\" />
     <Folder Include="lib\messages\outgoing\" />
     <Folder Include="lib\messages\outgoing\handshake\" />
     <Folder Include="lib\messages\outgoing\availability\" />
@@ -136,11 +173,15 @@
     <Folder Include="lib\messages\outgoing\inventory\purse\" />
     <Folder Include="lib\messages\outgoing\navigator\" />
     <Folder Include="lib\messages\outgoing\inventory\" />
+    <Folder Include="lib\messages\outgoing\room\" />
+    <Folder Include="lib\messages\outgoing\room\engine\" />
+    <Folder Include="lib\messages\outgoing\room\session\" />
     <Folder Include="lib\messages\outgoing\users\" />
     <Folder Include="lib\messages\outgoing\notifications\" />
     <Folder Include="lib\models\" />
     <Folder Include="lib\common\" />
     <Folder Include="lib\messages\" />
+    <Folder Include="lib\models\rooms\" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\async\" />

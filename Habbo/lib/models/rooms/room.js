@@ -15,26 +15,19 @@
  */
 'use strict';
 
-const async = require('async');
-const RoomAvatar = require('../rooms/room_avatar');
-
-class Player {
-    constructor(session, user) {
-        this._session = session;
-        this._avatar = new RoomAvatar(this);
-
-        async.eachOf(user.dataValues, (value, key) => {
-            this[key] = value;
-        });
-    }
-
-    get session() {
-        return this._session;
-    }
-
-    get avatar() {
-        return this._avatar;
-    }
-}
-
-module.exports = Player;
+module.exports = (sequelize, dataTypes) => {
+    return sequelize.define('Room', {
+        id: {
+            type: dataTypes.INTEGER,
+            allowNull: false,
+            unique: true,
+            autoIncrement: true,
+            primaryKey: true
+        },
+        name: {
+            type: dataTypes.STRING,
+            allowNull: false
+        },
+        description: dataTypes.STRING
+    }, { timestamps: false });
+};

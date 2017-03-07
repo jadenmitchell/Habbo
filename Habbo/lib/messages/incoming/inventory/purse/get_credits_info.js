@@ -3,8 +3,6 @@ const CreditBalanceComposer = require('../../../outgoing/inventory/purse/credit_
 const ActivityPointsComposer = require('../../../outgoing/notifications/activity_points');
 
 function getCredits(session, packet) {
-    console.log(session.player);
-
     session.sendPacket(new CreditBalanceComposer(session.player.credits));
     session.sendPacket(new ActivityPointsComposer(session.player.pixels));
 }

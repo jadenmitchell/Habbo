@@ -15,6 +15,7 @@
  */
 'use strict';
 
+const async = require('async');
 const net = require('net');
 const logger = require('./common/logger');
 const ByteBuf = require('./bytebuf');
@@ -30,6 +31,8 @@ const GameClient = require('./game/game_client');
 function tcpServer(port, maxConnections) {
     this._port = port;
     this._maxConnections = maxConnections;
+    
+    console.log(process.cpuUsage());
 }
 
 /**
@@ -44,6 +47,13 @@ tcpServer.prototype.listen = function() {
         socket.session = new GameClient(socket);
         socket.setKeepAlive(true);
         socket.setNoDelay(true);
+        socket.queue = async.queue((task, callback) => {
+            logger.debug('Writing a buffer to the socket stream');
+            socket.write(task);
+            callback();
+        }, 2);
+
+        socket.queue.drain = () => logger.debug('Finished sending queued socket messages');
 
         socket.on('data',
             (data) => {

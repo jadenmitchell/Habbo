@@ -15,6 +15,12 @@ const userObjectComposer = 2427;
 const perkAllowancesMessageComposer = 62;
 const creditBalanceComposer = 3464;
 const activityPointsMessageComposer = 3995;
+const openConnectionMessageComposer = 620;
+const roomReadyMessageComposer = 22;
+const roomRatingComposer = 3005;
+const furnitureAliasesMessageComposer = 2004;
+const heightMapMessageComposer = 3071;
+const floorHeightMapMessageComposer = 2606;
 
 class Outgoing {
     static get InitDiffieHandshakeMessageComposer() {
@@ -79,6 +85,30 @@ class Outgoing {
 
     static get ActivityPointsMessageComposer() {
         return activityPointsMessageComposer;
+    }
+
+    static get OpenConnectionMessageComposer() {
+        return openConnectionMessageComposer;
+    }
+
+    static get RoomReadyMessageComposer() {
+        return roomReadyMessageComposer;
+    }
+
+    static get RoomRatingComposer() {
+        return roomRatingComposer;
+    }
+
+    static get FurnitureAliasesMessageComposer() {
+        return furnitureAliasesMessageComposer;
+    }
+
+    static get HeightMapMessageComposer() {
+        return heightMapMessageComposer;
+    }
+
+    static get FloorHeightMapMessageComposer() {
+        return floorHeightMapMessageComposer;
     }
 }
 

@@ -2,7 +2,7 @@ const crypto = require('crypto');
 
 const BigInteger = require('jsbn').BigInteger;
 const RSA = require('./rsa');
-const RC4 = require('./rc4');
+const rc4 = require('./rc4');
 
 const diffieHellman = crypto.createDiffieHellman(30);
 const prime = new BigInteger('114670925920269957593299136150366957983142588366300079186349531', 10); // diffieHellman.getPrime();

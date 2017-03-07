@@ -22,7 +22,7 @@ const Promise = require('bluebird');
 const IncomingPacket = require('../messages/incoming/incoming_packet');
 const OutgoingPacket = require('../messages/outgoing/outgoing_packet');
 const rc4 = require('../encryption/rc4');
-const database = require('../models')();
+const Database = require('../models')();
 const Player = require('./players/player');
 const AuthenticationOKComposer = require('../messages/outgoing/handshake/authentication_ok');
 const AvailabilityStatusComposer = require('../messages/outgoing/availability/availability_status');
@@ -34,11 +34,13 @@ const ScrSendUserInfoComposer = require('../messages/outgoing/users/scr_send_use
 const FavoritesComposer = require('../messages/outgoing/navigator/favorites');
 const HabboBroadcastComposer = require('../messages/outgoing/notifications/habbo_broadcast');
 
-const User = database.models['User'];
+const User = Database.models['User'];
+const EmptyResultError = Database.Sequelize.EmptyResultError;
 
 class GameClient {
     constructor(socket) {
         this._socket = socket;
+        this._messages = [];
     }
     
     get rc4() {
@@ -51,13 +53,36 @@ class GameClient {
 
     /**
      * Finalize a packet buffer then send the raw contents to the socket.
-
+     *
      * @param {OutgoingPacket} packet constructed packet object
      */
     sendPacket(packet) {
         assert(packet instanceof OutgoingPacket);
         this.sendData(packet.wrap());
         return this;
+    }
+
+    /**
+     * Finalize a packet buffer then send the raw contents to an array of msgs.
+     *
+     * @param {OutgoingPacket} packet constructed packet object
+     */
+    sendQueued(packet) {
+        assert(packet instanceof OutgoingPacket);
+        this._messages.push(packet.wrap());
+        return this;
+    }
+
+    /**
+     * Flush the contents of the array of msgs after sending them to the socket
+     * write queue.
+     *
+     * @see {@link TcpServer} how socket messages are sent by the server from
+     *                        the queue at the source.
+     */
+    flush() {
+        this._socket.queue.push(this._messages);
+        delete this._messages;
     }
 
     /**
@@ -84,8 +109,8 @@ class GameClient {
      * Get and cache the player while logging in.
      *
      * @param {String} ssoTicket authentication ticket used for querying the user
-     * @returns {Boolean} true if the player was loaded successfully,
-     *                    false otherwise.
+     * @returns {Promise} nothing if the player was loaded successfully,
+     *                    rejected otherwise.
      */
     tryLogin(ssoTicket) {
         return new Promise((resolve, reject) => {
@@ -93,20 +118,27 @@ class GameClient {
                 where: { 'auth_ticket': ssoTicket },
                 rejectOnEmpty: true
             }).then((user) => {
-                this._player = new Player(user);
+                this._player = new Player(this, user);
 
-                this.sendPacket(new AuthenticationOKComposer())
-                    .sendPacket(new AvailabilityStatusComposer())
-                    .sendPacket(new NavigatorSettingsComposer(0))
-                    .sendPacket(new UserRightsComposer(true, true, false))
-                    .sendPacket(new AvatarEffectsComposer(null))
-                    .sendPacket(new GetMinimailMessageCountComposer());
+                this.sendQueued(new AuthenticationOKComposer())
+                    .sendQueued(new AvailabilityStatusComposer())
+                    .sendQueued(new NavigatorSettingsComposer(0))
+                    .sendQueued(new UserRightsComposer(true, true, false))
+                    .sendQueued(new AvatarEffectsComposer(null))
+                    .sendQueued(new GetMinimailMessageCountComposer())
+                    .flush();
+
                 this.sendPacket(new ScrSendUserInfoComposer());
                 this.sendPacket(new FavoritesComposer(null));
                 this.sendPacket(new HabboBroadcastComposer('Habbo Emulator Node.js by Jaden @ devbest.com'));
-            }).catch(err => {
+
+                /*setTimeout(() => {
+                    console.log('preparing room...');
+                    this._player.avatar.prepareRoom(1);
+                }, 10000);*/
+            }).catch(EmptyResultError, err => {
                 reject('No player found with your session ticket');
-            });
+            }).catch(err => reject());
         });
     }
 
