@@ -58,6 +58,9 @@
     <Compile Include="lib\messages\incoming\handshake\version_check.js" />
     <Compile Include="lib\messages\incoming\incoming.js" />
     <Compile Include="lib\messages\incoming\incoming_packet.js" />
+    <Compile Include="lib\messages\incoming\inventory\purse\get_credits_info.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\messages\outgoing\availability\availability_status.js">
       <SubType>Code</SubType>
     </Compile>
@@ -67,16 +70,28 @@
     <Compile Include="lib\messages\outgoing\handshake\complete_diffie_handshake.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lib\messages\outgoing\handshake\perk_allowances.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\handshake\user_object.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\messages\outgoing\handshake\user_rights.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\messages\outgoing\inventory\avatareffect\avatar_effects.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lib\messages\outgoing\inventory\purse\credit_balance.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\messages\outgoing\navigator\favorites.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\messages\outgoing\navigator\navigator_settings.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\notifications\activity_points.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\messages\outgoing\notifications\habbo_broadcast.js">
@@ -112,10 +127,13 @@
     <Folder Include="lib\game\players\" />
     <Folder Include="lib\messages\incoming\" />
     <Folder Include="lib\messages\incoming\handshake\" />
+    <Folder Include="lib\messages\incoming\inventory\" />
+    <Folder Include="lib\messages\incoming\inventory\purse\" />
     <Folder Include="lib\messages\outgoing\" />
     <Folder Include="lib\messages\outgoing\handshake\" />
     <Folder Include="lib\messages\outgoing\availability\" />
     <Folder Include="lib\messages\outgoing\inventory\avatareffect\" />
+    <Folder Include="lib\messages\outgoing\inventory\purse\" />
     <Folder Include="lib\messages\outgoing\navigator\" />
     <Folder Include="lib\messages\outgoing\inventory\" />
     <Folder Include="lib\messages\outgoing\users\" />

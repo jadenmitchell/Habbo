@@ -18,10 +18,12 @@
 const assert = require('assert');
 const logger = require('../common/logger');
 const packets = require('../messages/packets');
+const Promise = require('bluebird');
 const IncomingPacket = require('../messages/incoming/incoming_packet');
 const OutgoingPacket = require('../messages/outgoing/outgoing_packet');
 const rc4 = require('../encryption/rc4');
 const database = require('../models')();
+const Player = require('./players/player');
 const AuthenticationOKComposer = require('../messages/outgoing/handshake/authentication_ok');
 const AvailabilityStatusComposer = require('../messages/outgoing/availability/availability_status');
 const NavigatorSettingsComposer = require('../messages/outgoing/navigator/navigator_settings');
@@ -41,6 +43,10 @@ class GameClient {
     
     get rc4() {
         return this._rc4;
+    }
+
+    get player() {
+        return this._player;
     }
 
     /**
@@ -82,21 +88,26 @@ class GameClient {
      *                    false otherwise.
      */
     tryLogin(ssoTicket) {
-        User.findAll({
-            where: { 'auth_ticket': ssoTicket }
-        }).then((user) => {
-        });
+        return new Promise((resolve, reject) => {
+            User.findOne({
+                where: { 'auth_ticket': ssoTicket },
+                rejectOnEmpty: true
+            }).then((user) => {
+                this._player = new Player(user);
 
-        this.sendPacket(new AuthenticationOKComposer())
-            .sendPacket(new AvailabilityStatusComposer())
-            .sendPacket(new NavigatorSettingsComposer(0))
-            .sendPacket(new UserRightsComposer(true, true, false))
-            .sendPacket(new AvatarEffectsComposer(null))
-            .sendPacket(new GetMinimailMessageCountComposer());
-        this.sendPacket(new ScrSendUserInfoComposer());
-        this.sendPacket(new FavoritesComposer(null));
-        this.sendPacket(new HabboBroadcastComposer('Habbo Emulator Node.js by Jaden @ devbest.com'));
-        return true;
+                this.sendPacket(new AuthenticationOKComposer())
+                    .sendPacket(new AvailabilityStatusComposer())
+                    .sendPacket(new NavigatorSettingsComposer(0))
+                    .sendPacket(new UserRightsComposer(true, true, false))
+                    .sendPacket(new AvatarEffectsComposer(null))
+                    .sendPacket(new GetMinimailMessageCountComposer());
+                this.sendPacket(new ScrSendUserInfoComposer());
+                this.sendPacket(new FavoritesComposer(null));
+                this.sendPacket(new HabboBroadcastComposer('Habbo Emulator Node.js by Jaden @ devbest.com'));
+            }).catch(err => {
+                reject('No player found with your session ticket');
+            });
+        });
     }
 
     /**

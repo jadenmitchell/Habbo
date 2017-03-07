@@ -11,6 +11,10 @@ const avatarEffectsMessageComposer = 3798;
 const getMinimailMessageCountComposer = 417;
 const scrSendUserInfoMessageComposer = 3457;
 const favoritesMessageComposer = 1767;
+const userObjectComposer = 2427;
+const perkAllowancesMessageComposer = 62;
+const creditBalanceComposer = 3464;
+const activityPointsMessageComposer = 3995;
 
 class Outgoing {
     static get InitDiffieHandshakeMessageComposer() {
@@ -59,6 +63,22 @@ class Outgoing {
 
     static get FavoritesMessageComposer() {
         return favoritesMessageComposer;
+    }
+
+    static get UserObjectComposer() {
+        return userObjectComposer;
+    }
+
+    static get PerkAllowancesMessageComposer() {
+        return perkAllowancesMessageComposer;
+    }
+
+    static get CreditBalanceComposer() {
+        return creditBalanceComposer;
+    }
+
+    static get ActivityPointsMessageComposer() {
+        return activityPointsMessageComposer;
     }
 }
 

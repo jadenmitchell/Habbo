@@ -38,7 +38,28 @@ module.exports = (sequelize, dataTypes) => {
                 is: /(<([^>]+)>)/ig,
             }
         },
-        look: dataTypes.STRING,
+        gender: {
+            type: dataTypes.ENUM,
+            allowNull: false,
+            values: ['M', 'F'],
+            defaultValue: 'M'
+        },
+        figure: {
+            type: dataTypes.STRING,
+            validate: {
+                is: /[^a-zA-Z0-9\-]+/ig,
+            }
+        },
+        credits: {
+            type: dataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        pixels: {
+            type: dataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
         auth_ticket: {
             type: dataTypes.STRING,
             allowNull: false,

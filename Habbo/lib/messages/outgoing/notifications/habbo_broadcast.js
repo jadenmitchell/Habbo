@@ -2,7 +2,7 @@
 const OutgoingPacket = require('../outgoing_packet');
 
 class HabboBroadcastComposer extends OutgoingPacket {
-    constructor(message, url = "") {
+    constructor(message, url = '') {
         super(Outgoing.HabboBroadcastMessageComposer);
         super.writeString(message);
         super.writeString(url);
