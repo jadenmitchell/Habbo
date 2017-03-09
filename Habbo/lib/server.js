@@ -31,8 +31,6 @@ const GameClient = require('./game/game_client');
 function tcpServer(port, maxConnections) {
     this._port = port;
     this._maxConnections = maxConnections;
-    
-    console.log(process.cpuUsage());
 }
 
 /**
@@ -40,50 +38,44 @@ function tcpServer(port, maxConnections) {
  * 
  * @this {TcpServer}
  */
-tcpServer.prototype.listen = function() {
-    this._tcpServerSocket = net.createServer((socket) => {
+tcpServer.prototype.listen = function () {
+    this._tcpServerSocket = net.createServer(socket => {
         // todo: develop a method to determine if auth/xml policy socket
         // todo: do not instantiate GameClient or configure socket if auth socket.
         socket.session = new GameClient(socket);
         socket.setKeepAlive(true);
         socket.setNoDelay(true);
         socket.queue = async.queue((task, callback) => {
-            logger.debug('Writing a buffer to the socket stream');
             socket.write(task);
             callback();
         }, 2);
 
         socket.queue.drain = () => logger.debug('Finished sending queued socket messages');
 
-        socket.on('data',
-            (data) => {
-                if (socket.session.rc4) {
-                    //data = socket.session.rc4.decrypt(data);
-                }
+        socket.on('data', data => {
+            if (socket.session.rc4) {
+                //data = socket.session.rc4.decrypt(data);
+            }
 
-                let buffer = Buffer.from(data);
-                buffer = new ByteBuf(buffer);
+            let buffer = Buffer.from(data);
+            buffer = new ByteBuf(buffer);
 
-                /* TODO: Decrypt the buffer. */
-                socket.session.handlePacket(buffer);
-            });
+            /* TODO: Decrypt the buffer. */
+            socket.session.handlePacket(buffer);
+        });
     });
 
-    this._tcpServerSocket.on('error',
-        (err) => {
-            throw err;
-        });
+    this._tcpServerSocket.on('error', err => {
+        throw err;
+    });
 
     this._tcpServerSocket.maxConnections = this._maxConnections;
 
     this._tcpServerSocket.listen({
-            port: this._port,
-            backlog: 10,
-            exclusive: false
-        },
-        () => {
-            logger.debug('Currently listening socket server on port ::%s', this._port);
-        });
+        port: this._port,
+        backlog: 10,
+        exclusive: false
+    }, () => logger.debug('Currently listening socket server on port ::%s', this._port));
 };
 
 module.exports = tcpServer;

@@ -132,10 +132,10 @@ class GameClient {
                 this.sendPacket(new FavoritesComposer(null));
                 this.sendPacket(new HabboBroadcastComposer('Habbo Emulator Node.js by Jaden @ devbest.com'));
 
-                /*setTimeout(() => {
+                setTimeout(() => {
                     console.log('preparing room...');
                     this._player.avatar.prepareRoom(1);
-                }, 10000);*/
+                }, 5000);
             }).catch(EmptyResultError, err => {
                 reject('No player found with your session ticket');
             }).catch(err => reject());

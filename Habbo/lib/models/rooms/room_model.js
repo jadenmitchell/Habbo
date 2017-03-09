@@ -16,60 +16,57 @@
 'use strict';
 
 module.exports = (sequelize, dataTypes) => {
-    return sequelize.define('User', {
+    return sequelize.define('RoomModel', {
         id: {
-            type: dataTypes.INTEGER,
+            type: dataTypes.STRING,
             allowNull: false,
             unique: true,
-            autoIncrement: true,
             primaryKey: true
         },
-        username: {
-            type: dataTypes.STRING,
-            allowNull: false,
-            unique: true,
-            validate: {
-                is: /^[a-z0-9\_\-]+$/i,
-            }
-        },
-        motto: {
-            type: dataTypes.STRING,
-            validate: {
-                is: /(<([^>]+)>)/ig,
-            }
-        },
-        gender: {
+        type: {
             type: dataTypes.ENUM,
             allowNull: false,
-            values: ['M', 'F'],
-            defaultValue: 'M'
+            values: ['FLAT', 'PUBLIC'],
+            defaultValue: 'FLAT'
         },
-        figure: {
-            type: dataTypes.STRING,
-            validate: {
-                is: /[^a-zA-Z0-9\-]+/ig,
-            }
+        heightmap: {
+            type: dataTypes.TEXT,
+            allowNull: false,
         },
-        credits: {
+        enabled: {
+            type: dataTypes.ENUM,
+            allowNull: false,
+            values: ['0', '1'],
+            defaultValue: '1'
+        },
+        door_x: {
+            type: dataTypes.INTEGER,
+            allowNull: false
+        },
+        door_y: {
+            type: dataTypes.INTEGER,
+            allowNull: false
+        },
+        door_z: {
+            type: dataTypes.INTEGER,
+            allowNull: false
+        },
+        door_dir: {
+            type: dataTypes.INTEGER,
+            allowNull: false
+        },
+        subscription_requirement: {
+            type: dataTypes.ENUM,
+            allowNull: false,
+            values: ['0', '1', '2']
+        },
+        max_users: {
             type: dataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 0
-        },
-        pixels: {
-            type: dataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0
-        },
-        auth_ticket: {
-            type: dataTypes.STRING,
-            allowNull: false,
-            unique: true,
-            validate: {
-                is: /^[^\\w-]+$/i,
-            }
+            defaultValue: 30
         }
     }, {
-            tableName: 'users',
+            tableName: 'room_models',
             timestamps: false
         });
 };

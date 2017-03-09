@@ -31,7 +31,7 @@ const db = [];
 /**
  * Server environment.
  */
-const environment = process.env['NODE_ENV'] || 'development';
+const env = process.env['NODE_ENV'] || 'development';
 
 /**
  * Shared database connections across the server.
@@ -47,19 +47,16 @@ module.exports = (config) => {
     if (!config && !database)
         return null;
 
-    logger.debug('Connecting to the database: %s', config[environment]['database']);
+    logger.debug('Connecting to the database: %s', config[env]['database']);
 
-    const sequelize = new Sequelize(config[environment]['database'],
-        config[environment]['username'],
-        config[environment]['password'],
-        {
-            dialect: config[environment]['dialect'],
-            pool: {
-                max: 100,
-                min: 3,
-                idle: 60000
-            }
-        });
+    const sequelize = new Sequelize(config[env]['database'], config[env]['username'], config[env]['password'], {
+        dialect: config[env]['dialect'],
+        pool: {
+            max: 100,
+            min: 3,
+            idle: 60000
+        }
+    });
 
     sequelize
         .authenticate()

@@ -23,6 +23,7 @@ const packets = require('./lib/messages/packets');
 
 new Promise((resolve, reject) => {
     model(config).then(database => {
+        process.on('exit', () => database.sequelize.close());
         resolve();
     });
 
@@ -31,6 +32,8 @@ new Promise((resolve, reject) => {
     const TcpServer = require('./lib/server');
     const tcpServer = new TcpServer(3001, 10);
     tcpServer.listen();
+
+    logger.info(process.cpuUsage());
 });;
 
 

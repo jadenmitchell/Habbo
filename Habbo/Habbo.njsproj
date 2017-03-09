@@ -42,6 +42,12 @@
     <Compile Include="lib\game\players\player.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lib\game\rooms\mapping\height_map.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\game\rooms\mapping\room_tile_state.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\game\rooms\room_avatar.js">
       <SubType>Code</SubType>
     </Compile>
@@ -124,6 +130,24 @@
     <Compile Include="lib\messages\outgoing\room\engine\height_map.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lib\messages\outgoing\room\engine\items.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\room\engine\objects.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\room\engine\room_entry_info.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\room\engine\room_visualization_settings.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\room\engine\users.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\room\engine\user_update.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\messages\outgoing\room\session\open_connection.js">
       <SubType>Code</SubType>
     </Compile>
@@ -143,6 +167,9 @@
     <Compile Include="lib\models\rooms\room.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lib\models\rooms\room_model.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\models\user.js">
       <SubType>Code</SubType>
     </Compile>
@@ -159,6 +186,7 @@
     <Folder Include="lib\game\" />
     <Folder Include="lib\game\rooms\" />
     <Folder Include="lib\game\players\" />
+    <Folder Include="lib\game\rooms\mapping\" />
     <Folder Include="lib\messages\incoming\" />
     <Folder Include="lib\messages\incoming\handshake\" />
     <Folder Include="lib\messages\incoming\inventory\" />

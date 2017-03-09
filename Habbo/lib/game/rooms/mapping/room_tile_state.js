@@ -15,22 +15,31 @@
  */
 'use strict';
 
-module.exports = (sequelize, dataTypes) => {
-    return sequelize.define('Room', {
-        id: {
-            type: dataTypes.INTEGER,
-            allowNull: false,
-            unique: true,
-            autoIncrement: true,
-            primaryKey: true
-        },
-        name: {
-            type: dataTypes.STRING,
-            allowNull: false
-        },
-        description: dataTypes.STRING
-    }, {
-            tableName: 'rooms',
-            timestamps: false
-        });
-};
+/**
+ * @enum {Number}
+ * @static
+ */
+class RoomTileState {
+    /**
+     * The tile is open and can be moved to.
+     */ 
+    static get Open() {
+        return 0;
+    }
+
+    /**
+     * The tile is blocked.
+     */
+    static get Blocked() {
+        return 1;
+    }
+
+    /**
+     * The tile is the door, exits the room.
+     */
+    static get Door() {
+        return 2;
+    }
+}
+
+module.exports = RoomTileState;

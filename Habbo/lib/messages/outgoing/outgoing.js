@@ -21,6 +21,12 @@ const roomRatingComposer = 3005;
 const furnitureAliasesMessageComposer = 2004;
 const heightMapMessageComposer = 3071;
 const floorHeightMapMessageComposer = 2606;
+const roomEntryInfoMessageComposer = 1024;
+const roomVisualizationSettingsComposer = 611;
+const usersMessageComposer = 2330;
+const objectsMessageComposer = 2616;
+const itemsMessageComposer = 2862;
+const userUpdateMessageComposer = 2397;
 
 class Outgoing {
     static get InitDiffieHandshakeMessageComposer() {
@@ -109,6 +115,30 @@ class Outgoing {
 
     static get FloorHeightMapMessageComposer() {
         return floorHeightMapMessageComposer;
+    }
+
+    static get RoomEntryInfoMessageComposer() {
+        return roomEntryInfoMessageComposer;
+    }
+
+    static get RoomVisualizationSettingsComposer() {
+        return roomVisualizationSettingsComposer;
+    }
+
+    static get UsersMessageComposer() {
+        return usersMessageComposer;
+    }
+
+    static get ObjectsMessageComposer() {
+        return objectsMessageComposer;
+    }
+
+    static get ItemsMessageComposer() {
+        return itemsMessageComposer;
+    }
+
+    static get UserUpdateMessageComposer() {
+        return userUpdateMessageComposer;
     }
 }
 
