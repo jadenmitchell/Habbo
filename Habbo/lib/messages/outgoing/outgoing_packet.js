@@ -1,3 +1,4 @@
+const logger = require('../../common/logger');
 const Packet = require('../packet');
 const ByteBuf = require('../../bytebuf');
 
@@ -70,6 +71,18 @@ class OutgoingPacket extends Packet {
         this._buffer.resetIndex();
         this._buffer.writeInt(this._buffer.length);
         return this._buffer.source;
+    }
+
+    /**
+     * Better practice calls for using an instance method
+     * to handle outgoing msgs.
+     *
+     * constructors = possible corruption and lack of testability.
+     *
+     * @this {OutgoingPacket}
+     */
+    compose() {
+        logger.warn(`No functionality for ${this.constructor.name}.compose() implemented.`);
     }
 }
 

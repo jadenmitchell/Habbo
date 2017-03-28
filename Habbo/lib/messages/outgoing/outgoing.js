@@ -27,6 +27,8 @@ const usersMessageComposer = 2330;
 const objectsMessageComposer = 2616;
 const itemsMessageComposer = 2862;
 const userUpdateMessageComposer = 2397;
+const messengerInitComposer = 109;
+const friendListUpdateComposer = 1310;
 
 class Outgoing {
     static get InitDiffieHandshakeMessageComposer() {
@@ -139,6 +141,14 @@ class Outgoing {
 
     static get UserUpdateMessageComposer() {
         return userUpdateMessageComposer;
+    }
+
+    static get MessengerInitComposer() {
+        return messengerInitComposer;
+    }
+
+    static get FriendListUpdateComposer() {
+        return friendListUpdateComposer;
     }
 }
 

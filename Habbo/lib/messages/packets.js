@@ -1,6 +1,8 @@
 ﻿'use strict';
 
-const fileAsync = require('../common/file');
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
+const path = require('path');
 const logger = require('../common/logger');
 const assert = require('assert');
 
@@ -11,19 +13,6 @@ const assert = require('assert');
  * @type {Array}
  */
 const packets = [];
-
-/**
- * Remove redundant and/or invalid files from the list.
- * Packet criteria requires certain file naming standards.
- * 
- * @param list files found in the directory
- * @returns {Array.<String>} filtered list
- */
-function filterPacketFile(list) {
-    return list.filter((file) => {
-        return (file.indexOf('.') !== 0) && (file !== 'incoming.js') && (file !== 'incoming_packet.js');
-    });
-}
 
 /**
  * Get packet handler associated.
@@ -37,34 +26,8 @@ function getPacketHandler(header) {
 }
 
 /**
- * Load packet handlers with reflection.
- * 
  * @exports
  */
-async function loadPacketHandlers() {
-    fileAsync.recursive('./lib/messages/incoming',
-        filterPacketFile,
-        (err, results) => {
-            // todo: better error handling for packet initialization.
-            if (err) throw err;
-            results.forEach((file) => {
-                const eventHandler = require(file);
-                if (eventHandler.serial && eventHandler.handle) {
-                    assert.equal(typeof eventHandler.serial, 'number', 'Packet serial must be a number!');
-                    assert.equal(typeof eventHandler.handle, 'function', 'Packet event handler must be a function!');
-
-                    packets[eventHandler.serial] = eventHandler.handle;
-                    logger.info('Registered packet event (%s)', eventHandler.handle.name);
-                    // todo: allow own static function names using getOwnPropertyNames()
-                    /*const properties = Object.getOwnPropertyNames(eventHandler);
-                    properties.forEach((element) => {
-                        console.log(element);
-                    });*/
-                }
-            });
-        });
-}
-
 module.exports = (header) => {
     if (header && !!packets.length) {
         return getPacketHandler(header);
@@ -74,9 +37,25 @@ module.exports = (header) => {
     if (header)
         return false;
 
-    loadPacketHandlers();
-    return true;
-};
+    const recursive = directory => fs.readdirAsync(directory).filter(file => {
+        return (file.indexOf('.') !== 0) && (file !== 'incoming.js') && (file !== 'incoming_packet.js');
+    }).map(file => {
+        file = path.join(directory, file);
+        return fs.statAsync(file).then(stat => stat.isDirectory() ? recursive(file) : file);
+    }).reduce((a, b) => a.concat(b), []);
+
+    recursive(__dirname + '/incoming')
+        .each((file) => {
+            const packet = require(file);
+
+            if (packet.serial && packet.handle) {
+                assert.equal(typeof packet.serial, 'number', 'Packet serial must be a number!');
+                assert.equal(typeof packet.handle, 'function', 'Packet event handler must be a function!');
+
+                packets[packet.serial] = packet.handle;
+                logger.debug(`Loaded the ${packet.handle.name} packet event.`);
+            }
+        });
+}
 
 module.exports.getPacketHandler = getPacketHandler;
-module.exports.loadPacketHandlers = loadPacketHandlers;

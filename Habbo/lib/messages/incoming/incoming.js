@@ -9,6 +9,7 @@ const getCreditsInfoEvent = 184;
 const getSoundSettingsEvent = 3206;
 const getFurnitureAliasesMessageEvent = 2403;
 const getRoomEntryDataMessageEvent = 2589;
+const messengerInitMessageEvent = 2959;
 
 class Incoming {
     static get VersionCheckMessageEvent() {
@@ -49,6 +50,10 @@ class Incoming {
 
     static get GetRoomEntryDataMessageEvent() {
         return getRoomEntryDataMessageEvent;
+    }
+
+    static get MessengerInitMessageEvent() {
+        return messengerInitMessageEvent;
     }
 }
 

@@ -17,76 +17,105 @@
 
 const RoomTileState = require('./room_tile_state');
 
-class HeightMap {
-    constructor(heightMap) {
-        heightMap = heightMap.split('\r\n');
-        this._sizeX = heightMap[0].length;
-        this._sizeY = heightMap.length;
-        this._tileStates = [];
-        this._floorHeight = [];
+function HeightMap(row) {
+    this.name = row.name;
+    this.doorX = row.door_x;
+    this.doorY = row.door_y;
+    this.doorDirection = row.door_dir;
+    this.heightmap = row.heightmap;
+    this.parse();
+}
 
-        for (let y = 0; y < this._sizeY; y++) {
-            for (let x = 0; x < this._sizeX; x++) {
-                const value = heightMap[y][x].toLowerCase();
-
-                if (value === 'x') {
-                    if (!this._tileStates[x])
-                        this._tileStates[x] = [];
-                    if (!this._floorHeight[x])
-                        this._floorHeight[x] = [];
-
-                    this._tileStates[x][y] = RoomTileState.Blocked;
-                    this._floorHeight[x][y] = 0;
-
-                    this._heightMap += 'x';
+HeightMap.prototype.parse = function () {
+    var modelTemp = this.heightmap.split("\r");
+    this.mapSize = 0;
+    this.mapSizeX = modelTemp[0].length;
+    this.mapSizeY = modelTemp.length;
+    this.squareHeights = new Array();
+    this.squareStates = new Array();
+    for (var i = 0; i < this.mapSizeX; i++) {
+        this.squareHeights[i] = new Array();
+        this.squareStates[i] = new Array();
+    }
+    var x;
+    var Square;
+    var height;
+    for (var y = 0; y < this.mapSizeY; y++) {
+        if (modelTemp[y].length == 0 || modelTemp[y] == "\r")
+            continue;
+        if (y > 0) {
+            modelTemp[y] = modelTemp[y].substring(1);
+        }
+        for (x = 0; x < this.mapSizeX; x++) {
+            if (modelTemp[y].length != this.mapSizeX)
+                break;
+            Square = modelTemp[y].substring(x, x + 1).trim().toLowerCase();
+            if (Square == "x") {
+                this.squareStates[x][y] = RoomTileState.BLOCKED;
+                this.mapSize += 1;
+            }
+            else {
+                if (Square.length == 0) {
+                    height = 0;
+                }
+                else if (!isNaN(parseFloat(Square))) {
+                    height = parseInt(Square);
                 }
                 else {
-                    if (!this._tileStates[x])
-                        this._tileStates[x] = [];
-                    if (!this._floorHeight[x])
-                        this._floorHeight[x] = [];
-
-                    const floorHeight = Number(value);
-
-                    this._tileStates[x][y] = RoomTileState.Open;
-                    this._floorHeight[x][y] = floorHeight;
-
-                    this._heightMap += floorHeight;
+                    height = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(Square.toUpperCase());
                 }
-            }
-
-            this._heightMap += String.fromCharCode(13);
-        }
-
-        this._relativeHeightMap = '';
-
-        for (let y = 0; y < this._sizeY; y++) {
-            for (let x = 0; x < this._sizeX; x++) {
-                if (this._tileStates[x][y] === RoomTileState.Blocked) {
-                    this._relativeHeightMap += 'x';
-                    continue;
+                this.squareStates[x][y] = RoomTileState.OPEN;
+                this.squareHeights[x][y] = height;
+                this.mapSize += 1;
+                if (this.heighestPoint < height) {
+                    this.heighestPoint = height;
                 }
-                
-                this._relativeHeightMap += this._floorHeight[x][y];
             }
         }
     }
+};
 
-    get relativeHeightMap() {
-        return this._relativeHeightMap;
+HeightMap.prototype.getHeightAtSquare = function (x, y) {
+    if (x < 0 || y < 0 || x >= this.getMapSizeX() || y >= this.getMapSizeY())
+        return 0;
+    return this.squareHeights[x][y];
+};
+HeightMap.prototype.getName = function () {
+    return this.name;
+};
+HeightMap.prototype.getMapSize = function () {
+    return this.mapSize;
+};
+HeightMap.prototype.getMapSizeX = function () {
+    return this.mapSizeX;
+};
+HeightMap.prototype.getMapSizeY = function () {
+    return this.mapSizeY;
+};
+HeightMap.prototype.getDoorX = function () {
+    return this.doorX;
+};
+HeightMap.prototype.getDoorY = function () {
+    return this.doorY;
+};
+HeightMap.prototype.getDoorZ = function () {
+    return this.doorZ;
+};
+HeightMap.prototype.getDoorDirection = function () {
+    return this.doorDirection;
+};
+HeightMap.prototype.getSquareStates = function () {
+    return this.squareStates;
+};
+HeightMap.prototype.getSquareHeights = function () {
+    return this.squareHeights;
+};
+HeightMap.prototype.getRelativeMap = function () {
+    var heightmap = this.heightmap;
+    for (var i = 0; i < 50; i++) {
+        heightmap = heightmap.replace("\r\n", "\r");
     }
-
-    get tileStates() {
-        return this._tileStates;
-    }
-
-    get floorHeight() {
-        return this._floorHeight;
-    }
-
-    toString() {
-        return this._heightMap;
-    }
-}
+    return heightmap;
+};
 
 module.exports = HeightMap;

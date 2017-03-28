@@ -1,6 +1,4 @@
-﻿// NOTICE: This class is awaiting deprecation as being replaced by code over convention.
-
-/**
+﻿/**
  * Copyright 2016 Jaden M.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,6 +25,7 @@ const path = require('path');
  * @param dir the directory we start searching in
  * @param filter exclude any files with certain name qualities
  * @param done the results, list of files by name
+ * @deprecated
  */
 function readFilesRecur(dir, filter, done) {
     let results = [];
@@ -58,6 +57,7 @@ function readFilesRecur(dir, filter, done) {
  * 
  * @param list files found in the directory
  * @returns {Array.<String>} filtered list
+ * @deprecated
  */
 function filterFiles(list) {
     return list.filter((file) => {

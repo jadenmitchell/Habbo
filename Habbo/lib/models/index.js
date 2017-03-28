@@ -38,6 +38,9 @@ const env = process.env['NODE_ENV'] || 'development';
  */
 let database;
 
+/**
+ * @exports
+ */
 module.exports = (config) => {
     if (!config && Object.isFrozen(database)) {
         return database;
@@ -60,10 +63,8 @@ module.exports = (config) => {
 
     sequelize
         .authenticate()
-        .then(function (err) {
-            logger.debug('Connection has been established successfully.');
-        })
-        .catch(function (err) {
+        .then(err => logger.debug('Connection has been established successfully.'))
+        .catch(err => {
             logger.error('Unable to connect to the database.', err);
             return null;
         });

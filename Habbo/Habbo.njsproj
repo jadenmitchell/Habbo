@@ -70,6 +70,9 @@
     <Compile Include="lib\messages\incoming\inventory\purse\get_credits_info.js">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="lib\messages\incoming\messenger\messenger_init.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="lib\messages\incoming\room\engine\get_furniture_aliases.js">
       <SubType>Code</SubType>
     </Compile>
@@ -98,6 +101,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\messages\outgoing\inventory\purse\credit_balance.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\messenger\friend_list_update.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="lib\messages\outgoing\messenger\messenger_init.js">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="lib\messages\outgoing\navigator\favorites.js">
@@ -191,6 +200,7 @@
     <Folder Include="lib\messages\incoming\handshake\" />
     <Folder Include="lib\messages\incoming\inventory\" />
     <Folder Include="lib\messages\incoming\inventory\purse\" />
+    <Folder Include="lib\messages\incoming\messenger\" />
     <Folder Include="lib\messages\incoming\room\" />
     <Folder Include="lib\messages\incoming\room\engine\" />
     <Folder Include="lib\messages\incoming\sound\" />
@@ -201,6 +211,7 @@
     <Folder Include="lib\messages\outgoing\inventory\purse\" />
     <Folder Include="lib\messages\outgoing\navigator\" />
     <Folder Include="lib\messages\outgoing\inventory\" />
+    <Folder Include="lib\messages\outgoing\messenger\" />
     <Folder Include="lib\messages\outgoing\room\" />
     <Folder Include="lib\messages\outgoing\room\engine\" />
     <Folder Include="lib\messages\outgoing\room\session\" />

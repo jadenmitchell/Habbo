@@ -31,6 +31,7 @@ const UserRightsComposer = require('../messages/outgoing/handshake/user_rights')
 const AvatarEffectsComposer = require('../messages/outgoing/inventory/avatareffect/avatar_effects');
 const GetMinimailMessageCountComposer = require('../messages/outgoing/users/get_minimail_message_count');
 const ScrSendUserInfoComposer = require('../messages/outgoing/users/scr_send_user_info');
+const FriendListUpdateComposer = require('../messages/outgoing/messenger/friend_list_update');
 const FavoritesComposer = require('../messages/outgoing/navigator/favorites');
 const HabboBroadcastComposer = require('../messages/outgoing/notifications/habbo_broadcast');
 
@@ -129,13 +130,9 @@ class GameClient {
                     .flush();
 
                 this.sendPacket(new ScrSendUserInfoComposer());
+                this.sendPacket(new FriendListUpdateComposer());
                 this.sendPacket(new FavoritesComposer(null));
                 this.sendPacket(new HabboBroadcastComposer('Habbo Emulator Node.js by Jaden @ devbest.com'));
-
-                setTimeout(() => {
-                    console.log('preparing room...');
-                    this._player.avatar.prepareRoom(1);
-                }, 5000);
             }).catch(EmptyResultError, err => {
                 reject('No player found with your session ticket');
             }).catch(err => reject());
@@ -148,6 +145,7 @@ class GameClient {
      * @param {ByteBuf} buffer boilerplate over the network buffer
      */
     async handlePacket(buffer) {
+        console.time('packet_execution_time');
         const delimiter = String.fromCharCode(buffer.readByte());
         await buffer.resetIndex();
 
@@ -182,6 +180,7 @@ class GameClient {
 
         logger.debug('Incoming packet: %s', handler.name);
         await handler(this, packet);
+        console.timeEnd('packet_execution_time');
     }
 }
 

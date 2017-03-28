@@ -16,30 +16,22 @@
 'use strict';
 
 /**
- * @enum {Number}
- * @static
+ * The tile is open and can be moved to.
  */
-class RoomTileState {
-    /**
-     * The tile is open and can be moved to.
-     */ 
-    static get Open() {
-        return 0;
-    }
+const OPEN = 'OPEN';
 
-    /**
-     * The tile is blocked.
-     */
-    static get Blocked() {
-        return 1;
-    }
+/**
+ * The tile is blocked.
+ */
+const BLOCKED = 'BLOCKED';
 
-    /**
-     * The tile is the door, exits the room.
-     */
-    static get Door() {
-        return 2;
-    }
-}
+/**
+ * The tile is the door, exits the room.
+ */
+const DOOR = 'DOOR';
 
-module.exports = RoomTileState;
+module.exports = {
+    OPEN: OPEN,
+    BLOCKED: BLOCKED,
+    DOOR: DOOR
+};

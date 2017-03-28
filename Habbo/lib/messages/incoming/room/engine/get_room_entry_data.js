@@ -10,9 +10,17 @@ const ItemsComposer = require('../../../outgoing/room/engine/items');
 const UserUpdateComposer = require('../../../outgoing/room/engine/user_update');
 
 function getRoomEntryData(session, packet) {
-    const heightMap = new HeightMap('xxxxxxxxxxxx\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxxxxxxxxxx\r\nxxxxxxxxxxxx');
-    session.sendPacket(new HeightMapComposer('xxxxxxxxxxxx\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxxxxxxxxxx\r\nxxxxxxxxxxxx'));
-    session.sendPacket(new FloorHeightMapComposer(heightMap.relativeHeightMap));
+    const row = {};
+    row.name = 'model_a';
+    row.door_x = 3;
+    row.door_y = 5;
+    row.door_z = 0;
+    row.door_dir = 2;
+    row.heightmap = 'xxxxxxxxxxxx\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxx00000000\r\nxxxxxxxxxxxx\r\nxxxxxxxxxxxx';
+    const heightMap = new HeightMap(row);
+
+    session.sendPacket(new HeightMapComposer(heightMap.getRelativeMap()));
+    session.sendPacket(new FloorHeightMapComposer(heightMap.getRelativeMap()));
     session.sendPacket(new UsersComposer());
     session.sendPacket(new ObjectsComposer());
     session.sendPacket(new ItemsComposer());
