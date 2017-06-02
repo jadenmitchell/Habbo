@@ -33,7 +33,6 @@ model(config).then(database => {
 packets();
 logger.info(process.cpuUsage());
 
-
 if (global.gc) {
     logger.debug('Forced garbage collection for your Node.js app is available and will be used.');
 } else {
