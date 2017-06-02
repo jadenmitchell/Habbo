@@ -1,0 +1,19 @@
+[IN PROGRESS]
+Fix RoomEntryInfoComposer disconnecting (6/2/2017)
+
+[SHORT TERM]
+Recode Heightmap
+Catalog packet structure and functionality
+Add more database tables for rooms, users, and navigator and link functionality
+Source code refactor
+
+[LONG TERM]
+*** Long term can also mean throughout development ***
+Recode logging (probably switch frameworks)
+Replace all async operations with promises
+Write in-client scripting language (like wired)
+Write sandbox vm for executing in-client scripts
+Clusters RPI / IPC for different packet game modules
+Organize source code and coding standard
+More ES6 + OOP support
+Mix procedural,functional,oop paradigms
