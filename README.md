@@ -9,4 +9,5 @@ Content managemnet system:
 
 Running flash client:
 ![alt text](https://devbest.com/proxy.php?image=http%3A%2F%2Fi.imgur.com%2FVqEYJMq.png&hash=9ac803db31d61944adc50b20827d37ad)
-![alt text](https://devbest.com/proxy.php?image=http%3A%2F%2Fi.imgur.com%2FWjYeSFy.png&hash=a068d1e026d8104bbc5ccd8f9519a4ed)
+![alt text](https://devbest.com/proxy.php?image=http%3A%2F%2Fi.imgur.com%2FSlDiBmh.png&hash=16de8aad2bfebe7a6b88671a8b82fffb)
+![alt text](https://devbest.com/proxy.php?image=https%3A%2F%2Fimage.prntscr.com%2Fimage%2F97d8b32619944c52891b05d111d8e7de.png&hash=f7caca00f2511e2fd4715331981321b1)
